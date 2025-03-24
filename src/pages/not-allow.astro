@@ -5,20 +5,18 @@ const user = await Astro.locals.currentUser();
 ---
 
 <Layout>
-  <div class="h-full flex justify-center items-center">
-    <div class="text-center">
-      <div>
-        User <mark class="bg-amber-200"
-          >{user?.emailAddresses[0].emailAddress}</mark
-        > is not allowed.
-      </div>
-      <div>Please contact website admin.</div>
-      <SignOutButton asChild={true}>
-        <button
-          class="inline-block bg-slate-700 px-4 py-1.5 text-white rounded-lg mt-4 cursor-pointer hover:bg-slate-600"
-          >Sign Out</button
-        >
-      </SignOutButton>
+  <div class="p-10 max-w-3xl mx-auto antialiased sm:text-xl text-lg">
+    <div>
+      User <mark class="bg-amber-200"
+        >{user?.emailAddresses[0].emailAddress}</mark
+      > is not allowed.
     </div>
+    <div>Please contact website admin.</div>
+    <SignOutButton asChild={true}>
+      <button
+        class="inline-block bg-slate-700 px-4 py-1.5 text-white rounded-lg mt-4 cursor-pointer hover:bg-slate-600 text-base"
+        >Sign Out</button
+      >
+    </SignOutButton>
   </div>
 </Layout>
