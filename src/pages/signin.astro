@@ -1,0 +1,14 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { SignIn } from "@clerk/astro/components";
+---
+
+<Layout>
+  <div class="h-full flex justify-center items-center">
+    <SignIn
+      withSignUp={true}
+      forceRedirectUrl="/admin"
+      signUpForceRedirectUrl="/admin"
+    />
+  </div>
+</Layout>
