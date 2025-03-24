@@ -2,11 +2,10 @@
 import { Code } from "astro:components";
 import astroLogo from "../assets/astro.svg";
 import Layout from "../layouts/Layout.astro";
+import { getData } from "../libs/planet";
 
-// export const prerender = true;
-
-const response = await fetch(new URL("/api/getData", Astro.url));
-const data = await response.json();
+export const prerender = true;
+const data = await getData();
 ---
 
 <Layout>
