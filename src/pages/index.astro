@@ -1,20 +1,28 @@
 ---
+import { Code } from "astro:components";
 import astroLogo from "../assets/astro.svg";
 import Layout from "../layouts/Layout.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+export const prerender = true;
+
+const response = await fetch(`${Astro.url.origin}/api/getData`);
+const data = await response.json();
 ---
 
 <Layout>
-  <div class="p-10 max-w-2xl mx-auto antialiased">
+  <div class="p-10 max-w-3xl mx-auto antialiased sm:text-2xl text-lg">
     <img src={astroLogo.src} width="115" height="48" alt="Astro Homepage" />
-    <div class="sm:text-2xl text-lg mt-8">To manage website, go to</div>
+    <div class="mt-8">To manage website data, go to</div>
     <a
       href={Astro.request.url + "admin"}
-      class="px-3 py-1.5 rounded-lg bg-slate-800 text-white my-4 inline-block"
+      class="px-3 py-1.5 rounded-lg bg-slate-800 text-white my-4 inline-block text-base"
       >{Astro.request.url}admin</a
     >
-    <div class="mt-10">data: hello world</div>
+    <div class="mt-10">Data Object</div>
+    <Code
+      code={JSON.stringify(data, null, "\t")}
+      lang="js"
+      class="p-4 rounded-lg mt-2 text-base"
+    />
   </div>
 </Layout>
