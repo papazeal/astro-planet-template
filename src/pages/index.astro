@@ -2,10 +2,10 @@
 import { Code } from "astro:components";
 import astroLogo from "../assets/astro.svg";
 import Layout from "../layouts/Layout.astro";
-import { getData } from "../libs/planet";
+import { getSiteData } from "../libs/cms";
 
 export const prerender = true;
-const data = await getData();
+const data = await getSiteData();
 ---
 
 <Layout>
@@ -13,11 +13,11 @@ const data = await getData();
     <img src={astroLogo.src} width="115" height="48" alt="Astro Homepage" />
     <div class="mt-8">To manage website data, go to</div>
     <a
-      href={Astro.request.url + "admin"}
+      href="/admin"
       class="px-3 py-1.5 rounded-lg bg-slate-800 text-white my-4 inline-block text-base"
-      >{Astro.request.url}admin</a
+      >Admin Dashboard</a
     >
-    <div class="mt-10">Data Object</div>
+    <div class="mt-10">Data</div>
     <Code
       code={JSON.stringify(data, null, "\t")}
       lang="js"

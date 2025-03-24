@@ -1,9 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import PlanetCMS from "../components/CMS/PlanetCMS.svelte";
+
 const user = await Astro.locals.currentUser();
 
 const model = {};
 const data = {};
 ---
 
-<Layout> <div class="bg-red-200">admin</div> </Layout>
+<Layout>
+  <PlanetCMS client:load />
+</Layout>
