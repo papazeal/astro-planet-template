@@ -1,13 +1,43 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import PlanetCMS from "../components/CMS/PlanetCMS.svelte";
+import { SignOutButton } from "@clerk/astro/components";
 
 const user = await Astro.locals.currentUser();
 
 const model = {};
 const data = {};
+
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData();
+  console.log("form data", formData);
+}
 ---
 
 <Layout>
-  <PlanetCMS client:load />
+  <form method="POST">
+    <div
+      class="shadow-2xl bg-white p-4 px-8 md:flex fixed top-0 left-0 w-full z-50"
+    >
+      <div class="flex gap-4">
+        <div>{user?.emailAddresses[0].emailAddress}</div>
+        <a href={Astro.url.origin} target="_blank">{Astro.url.origin}</a>
+      </div>
+      <div class="ml-auto flex gap-4 items-center mt-4 md:mt-0">
+        <SignOutButton asChild={true}
+          ><button
+            class="border border-slate-500 px-4 py-1 rounded cursor-pointer"
+            >Sign Out</button
+          ></SignOutButton
+        >
+        <input
+          type="submit"
+          class="bg-slate-800 text-white px-6 py-1 rounded cursor-pointer"
+          value="Save Changes"
+        />
+      </div>
+    </div>
+
+    <PlanetCMS client:load />
+  </form>
 </Layout>

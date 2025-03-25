@@ -12,13 +12,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()]
   },
-  integrations: [clerk({
-     appearance: {
-      elements: {
-        footer: 'hidden!'
-      }
-    }
-  }), svelte()],
+  integrations: [clerk(), svelte()],
   output: 'server',
   adapter: vercel(),
 });
