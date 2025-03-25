@@ -3,11 +3,12 @@ import Layout from "../layouts/Layout.astro";
 import PlanetCMS from "../components/CMS/PlanetCMS.svelte";
 import { SignOutButton } from "@clerk/astro/components";
 import { Code } from "astro:components";
+import data from "../data/data.json" assert { type: "json" };
+import model from "../data/model.json" assert { type: "json" };
 
 const user = await Astro.locals.currentUser();
 
-const model = {};
-const data = {};
+// const model = {};
 
 if (Astro.request.method === "POST") {
   const formData = await Astro.request.formData();
@@ -46,8 +47,16 @@ const githubUser = await response.json();
     </div>
     <div class="p-8">
       <div>VERCEL_GIT_REPO_SLUG: {import.meta.env.VERCEL_GIT_REPO_SLUG}</div>
+      <div>VERCEL_GIT_REPO_OWNER: {import.meta.env.VERCEL_GIT_REPO_OWNER}</div>
+      data
       <Code
-        code={JSON.stringify(githubUser, null, "\t")}
+        code={JSON.stringify(data, null, "\t")}
+        lang="js"
+        class="p-4 rounded-lg mt-2 text-base"
+      />
+      model
+      <Code
+        code={JSON.stringify(model, null, "\t")}
         lang="js"
         class="p-4 rounded-lg mt-2 text-base"
       />
