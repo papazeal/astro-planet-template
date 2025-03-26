@@ -3,8 +3,8 @@ import Layout from "../layouts/Layout.astro";
 import PlanetCMS from "../components/CMS/PlanetCMS.svelte";
 import { SignOutButton } from "@clerk/astro/components";
 import { Code } from "astro:components";
-import data from "../../data/data.json" assert { type: "json" };
-import modelJSON from "../../data/model.json" assert { type: "json" };
+import data from "/cms/data.json" assert { type: "json" };
+import modelJSON from "/cms/model.json" assert { type: "json" };
 import { commitFiles } from "../libs/github";
 
 const user = await Astro.locals.currentUser();

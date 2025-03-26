@@ -1,5 +1,5 @@
+import data from "/cms/data.json" assert { type: "json" };
+
 export const getSiteData = async () => {
-  const response = await fetch("https://randomuser.me/api/");
-  const data = await response.json();
   return data;
 };
