@@ -1,1 +1,10 @@
-{"settings":{"title":"test","description":"444555"},"appearance":{"logo":"","accent":""}}
+{
+	"settings": {
+		"title": "In the Tea",
+		"description": "12334343df"
+	},
+	"appearance": {
+		"logo": "dfdf",
+		"accent": "test123123"
+	}
+}

@@ -29,6 +29,9 @@ importers:
       svelte:
         specifier: ^5.25.3
         version: 5.25.3
+      svelte-french-toast:
+        specifier: ^1.2.0
+        version: 1.2.0(svelte@5.25.3)
       tailwindcss:
         specifier: ^4.0.15
         version: 4.0.15
@@ -1712,6 +1715,16 @@ packages:
   strip-ansi@7.1.0:
     resolution: {integrity: sha512-iq6eVVI64nQQTRYq2KtEg2d2uU7LElhTJwsH4YzIHZshxlgZms/wIc4VoDQTlG/IvVIrBKG06CrZnp0qv7hkcQ==}
     engines: {node: '>=12'}
+
+  svelte-french-toast@1.2.0:
+    resolution: {integrity: sha512-5PW+6RFX3xQPbR44CngYAP1Sd9oCq9P2FOox4FZffzJuZI2mHOB7q5gJBVnOiLF5y3moVGZ7u2bYt7+yPAgcEQ==}
+    peerDependencies:
+      svelte: ^3.57.0 || ^4.0.0
+
+  svelte-writable-derived@3.1.1:
+    resolution: {integrity: sha512-w4LR6/bYZEuCs7SGr+M54oipk/UQKtiMadyOhW0PTwAtJ/Ai12QS77sLngEcfBx2q4H8ZBQucc9ktSA5sUGZWw==}
+    peerDependencies:
+      svelte: ^3.2.1 || ^4.0.0-next.1 || ^5.0.0-next.94
 
   svelte2tsx@0.7.35:
     resolution: {integrity: sha512-z2lnOnrfb5nrlRfFQI8Qdz03xQqMHUfPj0j8l/fQuydrH89cCeN+v9jgDwK9GyMtdTRUkE7Neu9Gh+vfXJAfuQ==}
@@ -3978,6 +3991,15 @@ snapshots:
   strip-ansi@7.1.0:
     dependencies:
       ansi-regex: 6.1.0
+
+  svelte-french-toast@1.2.0(svelte@5.25.3):
+    dependencies:
+      svelte: 5.25.3
+      svelte-writable-derived: 3.1.1(svelte@5.25.3)
+
+  svelte-writable-derived@3.1.1(svelte@5.25.3):
+    dependencies:
+      svelte: 5.25.3
 
   svelte2tsx@0.7.35(svelte@5.25.3)(typescript@5.8.2):
     dependencies:

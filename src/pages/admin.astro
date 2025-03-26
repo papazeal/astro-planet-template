@@ -15,7 +15,7 @@ const user = await Astro.locals.currentUser();
 
 if (Astro.request.method === "POST") {
   const formData = await Astro.request.formData();
-  let processedFormObject = {};
+  let processedFormObject: any = {};
   for (const [key, value] of formData.entries()) {
     let [group, fieldID] = key.split("-");
     if (group && fieldID) {
@@ -34,49 +34,51 @@ if (Astro.request.method === "POST") {
     writeToFile("data.json", JSON.stringify(processedFormObject, null, "\t"));
   }
 
-  console.log("commit file to github");
+  return Response.json({ message: "Data saved successfully" });
 }
 ---
 
 <Layout>
-  <form method="POST">
-    <div class="shadow-lg bg-white p-4 px-8 md:flex top-0 left-0 w-full z-50">
-      <div class="flex gap-4">
-        <div>{user?.emailAddresses[0].emailAddress}</div>
-        <a href={Astro.url.origin} target="_blank">{Astro.url.origin}</a>
-      </div>
-      <div class="ml-auto flex gap-4 items-center mt-4 md:mt-0">
-        <SignOutButton asChild={true}
-          ><button
-            class="border border-slate-500 px-4 py-1 rounded cursor-pointer"
-            >Sign Out</button
-          ></SignOutButton
-        >
-        <input
-          type="submit"
-          class="bg-slate-800 text-white px-6 py-1 rounded cursor-pointer"
-          value="Save Changes"
-        />
-      </div>
+  <div class="shadow-lg bg-white p-4 px-8 md:flex top-0 left-0 w-full z-50">
+    <div class="flex gap-4">
+      <div>{user?.emailAddresses[0].emailAddress}</div>
+      <a href={Astro.url.origin}>{Astro.url.origin}</a>
     </div>
-    <div class="p-8">
+    <div class="ml-auto flex gap-4 items-center mt-4 md:mt-0">
+      <SignOutButton asChild={true}
+        ><button
+          class="border border-slate-500 px-4 py-1 rounded cursor-pointer"
+          >Sign Out</button
+        ></SignOutButton
+      >
+      <input
+        type="submit"
+        class="bg-slate-800 text-white px-6 py-1 rounded cursor-pointer"
+        value="Save Changes"
+      />
+    </div>
+  </div>
+  <div class="p-8">
+    <div class="hidden">
       <div>MODE: {import.meta.env.MODE}</div>
       <div>VERCEL_GIT_REPO_SLUG: {import.meta.env.VERCEL_GIT_REPO_SLUG}</div>
-      <div>VERCEL_GIT_REPO_OWNER: {import.meta.env.VERCEL_GIT_REPO_OWNER}</div>
-      <div class="hidden">
-        data
-        <Code
-          code={JSON.stringify(data, null, "\t")}
-          lang="js"
-          class="p-4 rounded-lg mt-2 text-base"
-        />
-        model
-        <Code
-          code={JSON.stringify(model, null, "\t")}
-          class="p-4 rounded-lg mt-2 text-base"
-        />
+      <div>
+        VERCEL_GIT_REPO_OWNER: {import.meta.env.VERCEL_GIT_REPO_OWNER}
       </div>
     </div>
-    <PlanetCMS client:load model={model} data={data} />
-  </form>
+    <div class="hidden">
+      data
+      <Code
+        code={JSON.stringify(data, null, "\t")}
+        lang="js"
+        class="p-4 rounded-lg mt-2 text-base"
+      />
+      model
+      <Code
+        code={JSON.stringify(model, null, "\t")}
+        class="p-4 rounded-lg mt-2 text-base"
+      />
+    </div>
+  </div>
+  <PlanetCMS client:load model={model} data={data} />
 </Layout>

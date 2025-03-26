@@ -16,6 +16,7 @@
     "@tailwindcss/vite": "^4.0.15",
     "astro": "^5.5.4",
     "svelte": "^5.25.3",
+    "svelte-french-toast": "^1.2.0",
     "tailwindcss": "^4.0.15",
     "typescript": "^5.8.2"
   }
