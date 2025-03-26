@@ -28,7 +28,7 @@ if (Astro.request.method === "POST") {
   console.log("form data", processedFormObject);
 
   if (import.meta.env.MODE === "production") {
-    await commitFiles(processedFormObject);
+    await commitFiles(JSON.stringify(processedFormObject, null, "\t"));
   } else {
     console.log("save file to local folder");
     writeToFile("data.json", JSON.stringify(processedFormObject, null, "\t"));
