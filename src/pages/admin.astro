@@ -3,25 +3,33 @@ import Layout from "../layouts/Layout.astro";
 import PlanetCMS from "../components/CMS/PlanetCMS.svelte";
 import { SignOutButton } from "@clerk/astro/components";
 import { Code } from "astro:components";
-import data from "../data/data.json" assert { type: "json" };
-import model from "../data/model.json" assert { type: "json" };
+import data from "../../data/data.json" assert { type: "json" };
+import modelJSON from "../../data/model.json" assert { type: "json" };
+import { commitFiles } from "../libs/github";
 
 const user = await Astro.locals.currentUser();
 
+const model = modelJSON.groups;
 // const model = {};
 
 if (Astro.request.method === "POST") {
   const formData = await Astro.request.formData();
-  console.log("form data", formData);
+  let formObject = {};
+  for (const [key, value] of formData.entries()) {
+    formObject[key] = value;
+  }
+  console.log("form data", formObject);
+  await commitFiles(formObject);
+  console.log("commit file to github");
 }
 
-const fetchOptions = {
-  headers: {
-    Authorization: `token ${import.meta.env.GITHUB_ACCESS_TOKEN}`,
-  },
-};
-const response = await fetch("https://api.github.com/user", fetchOptions);
-const githubUser = await response.json();
+// const fetchOptions = {
+//   headers: {
+//     Authorization: `token ${import.meta.env.GITHUB_ACCESS_TOKEN}`,
+//   },
+// };
+// const response = await fetch("https://api.github.com/user", fetchOptions);
+// const githubUser = await response.json();
 ---
 
 <Layout>
@@ -57,10 +65,9 @@ const githubUser = await response.json();
       model
       <Code
         code={JSON.stringify(model, null, "\t")}
-        lang="js"
         class="p-4 rounded-lg mt-2 text-base"
       />
     </div>
-    <PlanetCMS client:load />
+    <PlanetCMS client:load model={model} data={data} />
   </form>
 </Layout>

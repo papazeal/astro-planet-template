@@ -1,0 +1,40 @@
+{
+    "groups":[
+        {
+            "title": "Settings",
+            "id": "settings",
+            "fields": [
+                {
+                    "title": "Title",
+                    "id": "title",
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "title": "Description",
+                    "id": "description",
+                    "type": "text",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "title": "Appearance",
+            "id": "appearance",
+            "fields": [
+                {
+                    "title": "Logo",
+                    "id": "logo",
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "title": "Accent Color",
+                    "id": "accent",
+                    "type": "text",
+                    "value": ""
+                }
+            ]
+        }
+    ] 
+}
