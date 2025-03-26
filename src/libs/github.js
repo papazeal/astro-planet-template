@@ -9,7 +9,7 @@ export const commitFiles = async (data = {}) => {
   const owner = import.meta.env.VERCEL_GIT_REPO_OWNER;
   const repo = import.meta.env.VERCEL_GIT_REPO_SLUG;
   const path = "content/data.json"; // File path in the repo
-  const content = Buffer.from(JSON.stringify(data)).toString("base64"); // Encode to base64
+  const content = Buffer.from(data).toString("base64"); // Encode to base64
   const message = "update from planet";
 
   try {
