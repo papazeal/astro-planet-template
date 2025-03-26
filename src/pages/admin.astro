@@ -3,33 +3,39 @@ import Layout from "../layouts/Layout.astro";
 import PlanetCMS from "../components/CMS/PlanetCMS.svelte";
 import { SignOutButton } from "@clerk/astro/components";
 import { Code } from "astro:components";
-import data from "/cms/data.json" assert { type: "json" };
-import modelJSON from "/cms/model.json" assert { type: "json" };
+
 import { commitFiles } from "../libs/github";
+import { writeToFile } from "../libs/file";
+
+import data from "/content/data.json" assert { type: "json" };
+import modelJSON from "/content/model.json" assert { type: "json" };
+const model = modelJSON.groups;
 
 const user = await Astro.locals.currentUser();
 
-const model = modelJSON.groups;
-// const model = {};
-
 if (Astro.request.method === "POST") {
   const formData = await Astro.request.formData();
-  let formObject = {};
+  let processedFormObject = {};
   for (const [key, value] of formData.entries()) {
-    formObject[key] = value;
+    let [group, fieldID] = key.split("-");
+    if (group && fieldID) {
+      if (!processedFormObject[group]) {
+        processedFormObject[group] = {};
+      }
+      processedFormObject[group][fieldID] = value;
+    }
   }
-  console.log("form data", formObject);
-  await commitFiles(formObject);
+  console.log("form data", processedFormObject);
+
+  if (import.meta.env.MODE === "production") {
+    await commitFiles(processedFormObject);
+  } else {
+    console.log("save file to local folder");
+    writeToFile("data.json", JSON.stringify(processedFormObject, null, "\t"));
+  }
+
   console.log("commit file to github");
 }
-
-// const fetchOptions = {
-//   headers: {
-//     Authorization: `token ${import.meta.env.GITHUB_ACCESS_TOKEN}`,
-//   },
-// };
-// const response = await fetch("https://api.github.com/user", fetchOptions);
-// const githubUser = await response.json();
 ---
 
 <Layout>
@@ -54,19 +60,22 @@ if (Astro.request.method === "POST") {
       </div>
     </div>
     <div class="p-8">
+      <div>MODE: {import.meta.env.MODE}</div>
       <div>VERCEL_GIT_REPO_SLUG: {import.meta.env.VERCEL_GIT_REPO_SLUG}</div>
       <div>VERCEL_GIT_REPO_OWNER: {import.meta.env.VERCEL_GIT_REPO_OWNER}</div>
-      data
-      <Code
-        code={JSON.stringify(data, null, "\t")}
-        lang="js"
-        class="p-4 rounded-lg mt-2 text-base"
-      />
-      model
-      <Code
-        code={JSON.stringify(model, null, "\t")}
-        class="p-4 rounded-lg mt-2 text-base"
-      />
+      <div class="hidden">
+        data
+        <Code
+          code={JSON.stringify(data, null, "\t")}
+          lang="js"
+          class="p-4 rounded-lg mt-2 text-base"
+        />
+        model
+        <Code
+          code={JSON.stringify(model, null, "\t")}
+          class="p-4 rounded-lg mt-2 text-base"
+        />
+      </div>
     </div>
     <PlanetCMS client:load model={model} data={data} />
   </form>

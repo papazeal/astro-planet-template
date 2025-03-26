@@ -3,6 +3,7 @@
   import InputText from "./InputText.svelte";
   let props = $props();
   let model = props.model;
+  let data = props.data;
   onMount(() => {
     console.log("PlanetCMS");
   });
@@ -17,19 +18,19 @@
     </div>
   </div>
   <div class="w-full">
-    <div class="grid grid-cols-1 gap-4 p-8 w-full">
+    <div class="grid grid-cols-1 gap-8 p-8 w-full">
       {#each model as group}
         <div class="bg-green-50 w-full">
           {#each group.fields as field}
-            <div class="">
-              {field.title}
+            <label class="">
+              <div>{field.title}</div>
               <input
                 type="text"
                 name={group.id + "-" + field.id}
-                value={""}
-                class="border border-gray-800 px-2 py-1 rounded"
+                value={data[group.id][field.id] || ""}
+                class="border border-gray-500 px-2 py-1 rounded"
               />
-            </div>
+            </label>
           {/each}
         </div>
       {/each}

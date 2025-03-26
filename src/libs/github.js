@@ -6,12 +6,12 @@ export const commitFiles = async (data = {}) => {
     auth: import.meta.env.GITHUB_ACCESS_TOKEN,
   });
 
-  const owner = "papazeal"; // Replace with repo owner
-  const repo = "dummy"; // Replace with repo name
-  const path = "test/data/data.json"; // File path in the repo
+  const owner = import.meta.env.VERCEL_GIT_REPO_OWNER;
+  const repo = import.meta.env.VERCEL_GIT_REPO_SLUG;
+  const path = "content/data.json"; // File path in the repo
   const branch = "master"; // Target branch
   const content = Buffer.from(JSON.stringify(data)).toString("base64"); // Encode to base64
-  const message = "Added example.txt";
+  const message = "update from planet";
 
   try {
     // Get the SHA of the existing file (if it exists)

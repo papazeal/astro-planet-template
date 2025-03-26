@@ -3,9 +3,10 @@ import { Code } from "astro:components";
 import astroLogo from "../assets/astro.svg";
 import Layout from "../layouts/Layout.astro";
 import { getSiteData } from "../libs/cms";
+import data from "/content/data.json" assert { type: "json" };
 
 // export const prerender = true;
-const data = await getSiteData();
+// const data = await getSiteData();
 ---
 
 <Layout>
