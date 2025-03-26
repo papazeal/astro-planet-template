@@ -1,10 +1,1 @@
-{
-	"settings": {
-		"title": "In the Tea",
-		"description": "12334343df"
-	},
-	"appearance": {
-		"logo": "dfdf",
-		"accent": "test123123"
-	}
-}
+"{\n\t\"settings\": {\n\t\t\"title\": \"In the Tea test\",\n\t\t\"description\": \"12334343df\"\n\t},\n\t\"appearance\": {\n\t\t\"logo\": \"dfdf\",\n\t\t\"accent\": \"test123123\"\n\t}\n}"
