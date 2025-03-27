@@ -47,8 +47,8 @@
     <div
       class="md:w-80 shrink-0 border-slate-200 border-r relative md:shadow-xl"
     >
-      <div class="flex gap-4 shadow-lg px-6 py-3 items-center">
-        <div class="w-6 h-6 bg-slate-400 rounded-full shrink-0"></div>
+      <div class="flex gap-3 shadow-lg px-6 py-3 items-center">
+        <div class="w-6 h-6 bg-violet-800 rounded-full shrink-0"></div>
         <div class="overflow-ellipsis overflow-hidden">
           <div class="uppercase text-xs opacity-50 -mb-0.5 hidden">website</div>
           <a
