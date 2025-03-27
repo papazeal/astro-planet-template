@@ -4,6 +4,7 @@ import astroLogo from "../assets/astro.svg";
 import Layout from "../layouts/Layout.astro";
 import { getSiteData } from "../libs/cms";
 import data from "/content/data.json" assert { type: "json" };
+import { Image } from "astro:assets";
 
 // export const prerender = true;
 // const data = await getSiteData();
@@ -18,6 +19,11 @@ import data from "/content/data.json" assert { type: "json" };
       class="px-3 py-1.5 rounded-lg bg-slate-800 text-white my-4 inline-block text-base"
       >Admin Dashboard</a
     >
+    <Image
+      src="https://plus.unsplash.com/premium_photo-1674498270498-84889156da0f?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="Astro Logo"
+      inferSize={true}
+    />
     <div class="mt-10">Data</div>
     <Code
       code={JSON.stringify(data, null, "\t")}

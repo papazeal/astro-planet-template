@@ -20,4 +20,7 @@ export default defineConfig({
   integrations: [clerk(), svelte()],
   output: "server",
   adapter: vercel(),
+  image: {
+    remotePatterns: [{ protocol: "https" }],
+  },
 });
