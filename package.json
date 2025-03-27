@@ -15,6 +15,7 @@
     "@octokit/rest": "^21.1.1",
     "@tailwindcss/vite": "^4.0.15",
     "astro": "^5.5.4",
+    "sharp": "^0.33.5",
     "svelte": "^5.25.3",
     "svelte-french-toast": "^1.2.0",
     "tailwindcss": "^4.0.15",
