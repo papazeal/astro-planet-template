@@ -9,6 +9,7 @@
   let website = props.website;
   let isSaving = $state(false);
   let selectedGroup = $state(model[0].id);
+  let mobileMenu = $state(true);
   onMount(() => {
     // toast.success("It works!");
   });
@@ -24,7 +25,7 @@
     });
     const { message } = await response.json();
 
-    toast.success(message, { id: "cms" });
+    toast.success(message, { id: "cms", duration: 3000 });
     isSaving = false;
   }
 </script>
@@ -44,27 +45,41 @@
   </div>
   <div class="h-screen md:flex antialiased">
     <div
-      class="md:w-100 border-slate-200 border-r relative shadow-xl overflow-hidden"
+      class="md:w-80 shrink-0 border-slate-200 border-r relative md:shadow-xl"
     >
-      <div class="flex gap-4 shadow px-6 py-4">
-        <div class="w-9 h-9 bg-slate-400 rounded-full shrink-0 hidden"></div>
+      <div class="flex gap-4 shadow-lg px-6 py-3 items-center">
+        <div class="w-6 h-6 bg-slate-400 rounded-full shrink-0"></div>
         <div class="overflow-ellipsis overflow-hidden">
-          <div class="uppercase text-xs opacity-50 -mb-0.5">website</div>
+          <div class="uppercase text-xs opacity-50 -mb-0.5 hidden">website</div>
           <a
             href={website}
             class=" whitespace-nowrap border-b border-dotted border-slate-500"
             >{website}</a
           >
         </div>
+
+        <svg
+          class="ml-auto md:hidden h-7 cursor-pointer hover:opacity-100 opacity-70"
+          onclick={(mobileMenu = true)}
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          ><path
+            fill="currentColor"
+            d="M4 18q-.425 0-.712-.288T3 17t.288-.712T4 16h16q.425 0 .713.288T21 17t-.288.713T20 18zm0-5q-.425 0-.712-.288T3 12t.288-.712T4 11h16q.425 0 .713.288T21 12t-.288.713T20 13zm0-5q-.425 0-.712-.288T3 7t.288-.712T4 6h16q.425 0 .713.288T21 7t-.288.713T20 8z"
+          /></svg
+        >
       </div>
-      <div class="p-6 px-0 hidden md:block">
-        <div class="grid grid-cols-1">
+      <div class="p-6 md:!block" class:hidden={!mobileMenu}>
+        <div class="flex flex-wrap gap-2">
           {#each model as group}
             <button
               type="button"
-              class="w-full text-left cursor-pointer px-6 py-1"
-              class:font-semibold={selectedGroup === group.id}
-              onclick={(selectedGroup = group.id)}
+              class="w-full text-left cursor-pointer py-1"
+              class:md:font-semibold={selectedGroup === group.id}
+              onclick={() => {
+                selectedGroup = group.id;
+                mobileMenu = false;
+              }}
             >
               {group.title}
             </button>
@@ -89,15 +104,18 @@
         />
       </div>
     </div>
-    <div class="w-full">
+    <div class="w-full md:!block" class:hidden={mobileMenu}>
       <div
         class="grid grid-cols-1 gap-14 py-8 px-6 md:px-12 w-full text-gray-700"
       >
         {#each model as group}
-          <div class=" w-full grid grid-cols-1 gap-4">
-            <div class="text-lg">{group.title}</div>
+          <div
+            class=" w-full grid grid-cols-1 gap-4"
+            class:hidden={selectedGroup !== group.id}
+          >
+            <div class="text-xl">{group.title}</div>
             {#each group.fields as field}
-              <label class="">
+              <div class="">
                 <div class="mb-1">{field.title}</div>
                 <input
                   type="text"
@@ -105,7 +123,7 @@
                   value={data[group.id]?.[field.id] || ""}
                   class="border border-gray-400 px-2 py-1 rounded"
                 />
-              </label>
+              </div>
             {/each}
           </div>
         {/each}
