@@ -42,16 +42,18 @@
     </div>
     <div></div>
   </div>
-  <div class="h-screen md:flex">
+  <div class="h-screen md:flex antialiased">
     <div
       class="md:w-100 border-slate-200 border-r relative shadow-xl overflow-hidden"
     >
       <div class="flex gap-4 shadow px-6 py-4">
-        <div class="w-10 h-10 bg-slate-400 rounded-full shrink-0"></div>
+        <div class="w-9 h-9 bg-slate-400 rounded-full shrink-0 hidden"></div>
         <div class="overflow-ellipsis overflow-hidden">
-          <div class="uppercase text-sm opacity-50 -mb-0.5">website</div>
-          <a href={website} class=" border-b border-dotted border-slate-500"
-            >{website}dfdsafdasfdasf</a
+          <div class="uppercase text-xs opacity-50 -mb-0.5">website</div>
+          <a
+            href={website}
+            class=" whitespace-nowrap border-b border-dotted border-slate-500"
+            >{website}</a
           >
         </div>
       </div>
@@ -61,7 +63,7 @@
             <button
               type="button"
               class="w-full text-left cursor-pointer px-6 py-1"
-              class:text-violet-700={selectedGroup === group.id}
+              class:font-semibold={selectedGroup === group.id}
               onclick={(selectedGroup = group.id)}
             >
               {group.title}
@@ -76,14 +78,14 @@
       <div
         class="fixed flex md:absolute bottom-0 left-0 w-full p-4 shadow-lg border-t border-slate-300 gap-4 z-20 bg-white"
       >
-        <div class=" shrink-0 px-4 py-1 rounded border-slate-500 border">
+        <div class=" shrink-0 px-4 py-1.5 rounded border-slate-500 border">
           Sign Out
         </div>
         <input
           type="submit"
           value="Save "
           disabled={isSaving}
-          class="w-full bg-gray-800 text-white px-4 py-1 rounded cursor-pointer disabled:opacity-50"
+          class="w-full bg-gray-800 text-white px-4 py-1.5 rounded cursor-pointer disabled:opacity-50"
         />
       </div>
     </div>
