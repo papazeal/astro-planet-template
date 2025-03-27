@@ -39,7 +39,9 @@ if (Astro.request.method === "POST") {
 ---
 
 <Layout>
-  <div class="shadow-lg bg-white p-4 px-8 md:flex top-0 left-0 w-full z-50">
+  <div
+    class="shadow-lg bg-white p-4 px-8 md:flex top-0 left-0 w-full z-50 !hidden"
+  >
     <div class="flex gap-4">
       <div>{user?.emailAddresses[0].emailAddress}</div>
       <a href={Astro.url.origin}>{Astro.url.origin}</a>
@@ -58,8 +60,8 @@ if (Astro.request.method === "POST") {
       />
     </div>
   </div>
-  <div class="p-8">
-    <div class="hidden">
+  <div class="p-8 hidden">
+    <div class="">
       <div>MODE: {import.meta.env.MODE}</div>
       <div>VERCEL_GIT_REPO_SLUG: {import.meta.env.VERCEL_GIT_REPO_SLUG}</div>
       <div>
@@ -80,5 +82,11 @@ if (Astro.request.method === "POST") {
       />
     </div>
   </div>
-  <PlanetCMS client:load model={model} data={data} />
+  <PlanetCMS
+    client:load
+    model={model}
+    data={data}
+    user={user?.emailAddresses[0].emailAddress}
+    website={Astro.url.origin}
+  />
 </Layout>
