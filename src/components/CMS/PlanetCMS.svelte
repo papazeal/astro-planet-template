@@ -92,34 +92,10 @@
           {group.title}
         </button>
       {/each}
-      {#each model as group}
-        <button
-          type="button"
-          class=" cursor-pointer py-1.5 px-2 border-b-2 border-transparent -mb-[1px]"
-          class:border-violet-600={selectedGroup === group.id}
-          onclick={() => {
-            selectedGroup = group.id;
-          }}
-        >
-          {group.title}
-        </button>
-      {/each}
-      {#each model as group}
-        <button
-          type="button"
-          class=" cursor-pointer py-1.5 px-2 border-b-2 border-transparent -mb-[1px]"
-          class:border-violet-600={selectedGroup === group.id}
-          onclick={() => {
-            selectedGroup = group.id;
-          }}
-        >
-          {group.title}
-        </button>
-      {/each}
     </div>
   </div>
 
-  <div class="antialiased">
+  <div class="">
     <div class="">
       <div class="grid grid-cols-1 gap-14 py-8 px-8 w-full text-gray-700">
         {#each model as group}
