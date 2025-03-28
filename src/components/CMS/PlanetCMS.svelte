@@ -65,7 +65,7 @@
           class="fixed flex md:relative md:p-0 md:border-0 md:shadow-none bottom-0 left-0 w-full p-4 px-6 shadow-xl border-slate-100 gap-4 z-20 bg-white"
         >
           <div
-            class="absolute top-0 left-0 w-full h-10 shadow-lg -scale-y-100 md:hidden"
+            class="absolute top-0 left-0 w-full h-10 shadow-lg -scale-y-100 pointer-events-none md:hidden"
           ></div>
           <a
             href="/signout"
