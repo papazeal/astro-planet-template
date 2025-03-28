@@ -2,12 +2,10 @@
 import { Code } from "astro:components";
 import astroLogo from "../assets/astro.svg";
 import Layout from "../layouts/Layout.astro";
-import { getSiteData } from "../libs/cms";
 import data from "/content/data.json" assert { type: "json" };
-import { Image } from "astro:assets";
+import model from "/content/model.json" assert { type: "json" };
 
 // export const prerender = true;
-// const data = await getSiteData();
 ---
 
 <Layout>
@@ -24,6 +22,14 @@ import { Image } from "astro:assets";
     <Code
       code={JSON.stringify(data, null, "\t")}
       lang="js"
+      class="p-4 rounded-lg mt-2 text-base"
+    />
+
+    <div class="mt-10">Model</div>
+    <Code
+      code={JSON.stringify(model, null, "\t")}
+      lang="js"
+      wrap
       class="p-4 rounded-lg mt-2 text-base"
     />
   </div>

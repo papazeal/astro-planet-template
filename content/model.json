@@ -6,32 +6,62 @@
             "fields": [
                 {
                     "title": "Title",
+                    "description": "field description",
+                    "id": "title",
+                    "type": "text"
+                },
+                {
+                    "title": "Description",
+                    "id": "description",
+                    "type": "textarea"
+                },
+                {
+                    "title": "Logo",
+                    "id": "logo",
+                    "type": "image"
+                },
+                {
+                    "title": "Language",
+                    "id": "language",
+                    "type": "select",
+                    "options": [
+                        {"value":"en", "label":"EN"},
+                        {"value":"cn", "label":"CN"},
+                        {"value":"th", "label":"TH"}
+                    ]
+                },
+                {
+                    "title": "Allow SEO Bot",
+                    "id": "seo",
+                    "type": "checkbox"
+                },
+                {
+                    "title": "Theme",
+                    "id": "theme",
+                    "type": "radio",
+                    "options": [
+                        {"value":"light", "label":"Light"},
+                        {"value":"dark", "label":"Dark"},
+                        {"value":"auto", "label":"Auto"}
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Post",
+            "id": "post",
+            "collection": true,
+            "fields": [
+                {
+                    "title": "Title",
                     "id": "title",
                     "type": "text",
                     "value": ""
                 },
                 {
-                    "title": "Description",
-                    "id": "description",
-                    "type": "text",
-                    "value": ""
-                }
-            ]
-        },
-        {
-            "title": "Appearance",
-            "id": "appearance",
-            "fields": [
-                {
-                    "title": "Logo",
-                    "id": "logo",
-                    "type": "text",
-                    "value": ""
-                },
-                {
-                    "title": "Accent Color",
-                    "id": "accent",
-                    "type": "text",
+                    "title": "Content",
+                    "id": "content",
+                    "type": "editor",
                     "value": ""
                 }
             ]

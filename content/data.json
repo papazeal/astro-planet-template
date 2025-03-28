@@ -1,10 +1,10 @@
 {
 	"settings": {
 		"title": "Safety Homey",
-		"description": "123"
-	},
-	"appearance": {
-		"logo": "",
-		"accent": ""
+		"description": "1234",
+		"logo": {},
+		"language": "en",
+		"seo": "on",
+		"theme": "dark"
 	}
 }

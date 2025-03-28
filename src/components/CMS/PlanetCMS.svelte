@@ -1,7 +1,7 @@
 <script>
   import toast, { Toaster } from "svelte-french-toast";
   import { onMount } from "svelte";
-  import InputText from "./InputText.svelte";
+  import PlanetField from "./PlanetField.svelte";
   let props = $props();
   let model = props.model;
   let data = props.data;
@@ -30,9 +30,9 @@
 </script>
 
 <Toaster />
-<form method="POST" onsubmit={submit}>
-  <div class="shadow-md">
-    <div class="py-4 px-6 flex gap-8">
+<form method="POST" onsubmit={submit} class="antialias">
+  <div class="shadow">
+    <div class="py-4 px-5 md:px-6 flex gap-8">
       <div class="flex gap-2 overflow-hidden items-center">
         <svg
           class="h-6 shrink-0"
@@ -79,11 +79,11 @@
         </div>
       </div>
     </div>
-    <div class="px-6 flex gap-1 overflow-x-auto scrollbar-hide">
+    <div class="px-5 md:px-6 flex gap-1 overflow-x-auto scrollbar-hide">
       {#each model as group}
         <button
           type="button"
-          class=" cursor-pointer py-1.5 px-2 border-b-2 border-transparent -mb-[1px]"
+          class=" cursor-pointer py-1.5 px-2 border-b-2 border-transparent"
           class:border-violet-600={selectedGroup === group.id}
           onclick={() => {
             selectedGroup = group.id;
@@ -95,30 +95,26 @@
     </div>
   </div>
 
-  <div class="">
-    <div class="">
-      <div class="grid grid-cols-1 gap-14 py-8 px-8 w-full text-gray-700">
-        {#each model as group}
-          <div
-            class=" w-full grid grid-cols-1 gap-6"
-            class:hidden={selectedGroup !== group.id}
-          >
-            <div class="text-xl">{group.title}</div>
-            {#each group.fields as field}
-              <div class="">
-                <div class="mb-1">{field.title}</div>
-                <input
-                  type="text"
-                  name={group.id + "-" + field.id}
-                  value={data[group.id]?.[field.id] || ""}
-                  class="border border-gray-400 px-3 py-1.5 rounded w-100 max-w-full"
-                />
-              </div>
-            {/each}
-          </div>
-        {/each}
+  <div class="py-8 px-6 md:px-8 text-gray-700 pb-40 md:pb-8 max-w-3xl">
+    {#each model as group}
+      <div
+        class=" w-full grid grid-cols-1 gap-8"
+        class:hidden={selectedGroup !== group.id}
+      >
+        <div class="flex gap-4 items-center">
+          <div class="text-xl">{group.title}</div>
+          <button type="button" class="border px-2 rounded">New Post</button>
+        </div>
+
+        {#if group.collection}
+          collection {data[group.id]}
+        {:else}
+          {#each group.fields as field}
+            <PlanetField {field} value={data[group.id][field.id]} {group} />
+          {/each}
+        {/if}
       </div>
-    </div>
+    {/each}
   </div>
 </form>
 
