@@ -32,7 +32,7 @@
 <Toaster />
 <form method="POST" onsubmit={submit}>
   <div class="shadow-md">
-    <div class="py-4 px-6 flex gap-8 text-lg">
+    <div class="py-4 px-6 flex gap-8">
       <div class="flex gap-2 overflow-hidden items-center">
         <svg
           class="h-6 shrink-0"
@@ -79,7 +79,31 @@
         </div>
       </div>
     </div>
-    <div class="px-6 flex gap-1">
+    <div class="px-6 flex gap-1 overflow-x-auto scrollbar-hide">
+      {#each model as group}
+        <button
+          type="button"
+          class=" cursor-pointer py-1.5 px-2 border-b-2 border-transparent -mb-[1px]"
+          class:border-violet-600={selectedGroup === group.id}
+          onclick={() => {
+            selectedGroup = group.id;
+          }}
+        >
+          {group.title}
+        </button>
+      {/each}
+      {#each model as group}
+        <button
+          type="button"
+          class=" cursor-pointer py-1.5 px-2 border-b-2 border-transparent -mb-[1px]"
+          class:border-violet-600={selectedGroup === group.id}
+          onclick={() => {
+            selectedGroup = group.id;
+          }}
+        >
+          {group.title}
+        </button>
+      {/each}
       {#each model as group}
         <button
           type="button"
@@ -121,3 +145,16 @@
     </div>
   </div>
 </form>
+
+<style>
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+</style>
