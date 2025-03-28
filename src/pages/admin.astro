@@ -36,6 +36,11 @@ if (Astro.request.method === "POST") {
 
   return Response.json({ message: "Data saved successfully" });
 }
+
+const submit = async (e) => {
+  e.preventDefault();
+  toast.success("Changes saved successfully");
+};
 ---
 
 <Layout>
@@ -54,6 +59,7 @@ if (Astro.request.method === "POST") {
         ></SignOutButton
       >
       <input
+        onclick="submit(e)"
         type="submit"
         class="bg-slate-800 text-white px-6 py-1 rounded cursor-pointer"
         value="Save Changes"
