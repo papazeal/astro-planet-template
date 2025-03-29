@@ -118,7 +118,7 @@
                 <button
                   type="button"
                   class="cursor-pointer border-b border-dotted border-slate-300"
-                  onclick={() => (selectedRecord = nll)}
+                  onclick={() => (selectedRecord = null)}
                   >All {selectedGroup.title}</button
                 >
                 <div>></div>
