@@ -8,7 +8,10 @@
   let user = props.user;
   let website = props.website;
   let isSaving = $state(false);
-  let selectedGroup = $state(model[0].id);
+  let selectedGroup = $state(model[0]);
+  let selectedRecord = $state(null);
+  let formData = $state(data);
+
   onMount(() => {
     // toast.success("It works!");
   });
@@ -17,10 +20,14 @@
     isSaving = true;
     e.preventDefault();
     toast.loading("Saving...", { id: "cms" });
-    const formData = new FormData(e.currentTarget);
+    // const formData = new FormData(e.currentTarget);
     const response = await fetch("", {
       method: "POST",
-      body: formData,
+      type: "application/json",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
     });
     const { message } = await response.json();
 
@@ -87,9 +94,10 @@
         <button
           type="button"
           class=" cursor-pointer py-1.5 px-2 border-b-2 border-transparent"
-          class:border-violet-600={selectedGroup === group.id}
+          class:border-violet-600={selectedGroup.id === group.id}
           onclick={() => {
-            selectedGroup = group.id;
+            selectedGroup = group;
+            selectedRecord = null;
           }}
         >
           {group.title}
@@ -98,26 +106,121 @@
     </div>
   </div>
 
-  <div class="py-8 px-6 md:px-8 text-gray-700 pb-40 md:pb-8 max-w-3xl">
-    {#each model as group}
-      <div
-        class=" w-full grid grid-cols-1 gap-8"
-        class:hidden={selectedGroup !== group.id}
-      >
+  <div class="grid grid-cols-1">
+    <div class="py-8 px-6 md:px-8 text-gray-700 pb-40 md:pb-8 max-w-3xl">
+      <!-- title -->
+      <div class="mb-10">
         <div class="flex gap-4 items-center">
-          <div class="text-xl">{group.title}</div>
-          <button type="button" class="border px-2 rounded">New Post</button>
-        </div>
+          <div>
+            <div class="text-xl uppercase">{selectedGroup.title}</div>
+            {#if selectedRecord}
+              <div class="flex gap-2">
+                <button
+                  type="button"
+                  class="cursor-pointer border-b border-dotted border-slate-300"
+                  onclick={() => (selectedRecord = nll)}
+                  >All {selectedGroup.title}</button
+                >
+                <div>></div>
+                <div>Record</div>
+              </div>
+            {/if}
+          </div>
 
-        {#if group.collection}
-          collection {data[group.id]}
-        {:else}
-          {#each group.fields as field}
-            <PlanetField {field} value={data[group.id][field.id]} {group} />
-          {/each}
-        {/if}
+          {#if selectedGroup.collection && !selectedRecord}
+            <button
+              type="button"
+              class="border px-2 rounded cursor-pointer"
+              onclick={() => {
+                if (!formData[selectedGroup.id]) {
+                  formData[selectedGroup.id] = [];
+                }
+                formData[selectedGroup.id].push({});
+              }}>New Post</button
+            >
+          {/if}
+        </div>
       </div>
-    {/each}
+
+      {#if selectedGroup.collection}
+        {#if !selectedRecord}
+          <div
+            class="grid grid-cols-1 shadow-lg border-1 border-slate-300 rounded"
+          >
+            {#each formData[selectedGroup.id] as record, index}
+              <div
+                class=" py-2 border-b border-slate-200 flex gap-1 cursor-pointer hover:bg-slate-100 items-center"
+                onclick={() => {
+                  selectedRecord = record;
+                }}
+                draggable="true"
+                role="listitem"
+                ondragend={(e) => console.log(e)}
+              >
+                <div
+                  class=" cursor-grab px-1.5 text-slate-400 hover:text-slate-500"
+                >
+                  <svg
+                    class="h-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    ><path
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                      d="M5.5 4.75a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0m3.5 0a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0M5.5 7.995a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0m3.5 0a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0M5.5 11.25a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0m3.5 0a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0"
+                      clip-rule="evenodd"
+                    /></svg
+                  >
+                </div>
+                <div>{record["title"] || "item #" + (index + 1)}</div>
+
+                <button
+                  class="ml-auto px-2 text-slate-300 cursor-pointer h-5 hover:text-slate-500"
+                  aria-label="Remove item"
+                  onclick={() => {
+                    formData[selectedGroup.id].splice(index, 1);
+                  }}
+                >
+                  <svg
+                    class="h-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M205.66 194.34a8 8 0 0 1-11.32 11.32L128 139.31l-66.34 66.35a8 8 0 0 1-11.32-11.32L116.69 128L50.34 61.66a8 8 0 0 1 11.32-11.32L128 116.69l66.34-66.35a8 8 0 0 1 11.32 11.32L139.31 128Z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            {/each}
+          </div>
+        {/if}
+
+        {#if selectedRecord}
+          <div class="w-full grid grid-cols-1 gap-8">
+            {#each selectedGroup.fields as field}
+              <PlanetField {field} bind:value={selectedRecord[field.id]} />
+            {/each}
+          </div>
+        {/if}
+      {/if}
+
+      {#if !selectedGroup.collection}<div
+          class=" w-full grid grid-cols-1 gap-8"
+        >
+          {#each selectedGroup.fields as field}
+            <PlanetField
+              {field}
+              bind:value={formData[selectedGroup.id][field.id]}
+            />
+          {/each}
+        </div>
+      {/if}
+    </div>
+    <div>
+      <pre>{JSON.stringify(formData, null, "  ")}</pre>
+    </div>
   </div>
 </form>
 

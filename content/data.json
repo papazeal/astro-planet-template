@@ -6,5 +6,9 @@
 		"language": "en",
 		"seo": "on",
 		"theme": "dark"
-	}
+	},
+	"post": [
+		{},
+		{}
+	]
 }

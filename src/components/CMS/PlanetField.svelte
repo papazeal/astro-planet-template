@@ -1,8 +1,6 @@
 <script>
-  let props = $props();
+  let { value = $bindable(), ...props } = $props();
   let field = props.field;
-  let group = props.group;
-  let value = props.value;
 </script>
 
 <div class="">
@@ -14,39 +12,31 @@
   {#if field.type == "text"}
     <input
       type="text"
-      name={group.id + "-" + field.id}
-      value={value || ""}
+      bind:value
       class="border border-gray-400 px-3 py-1.5 rounded w-100 max-w-full"
     />
   {/if}
 
   {#if field.type == "textarea"}
     <textarea
-      name={group.id + "-" + field.id}
       class="border border-gray-400 px-3 py-1.5 rounded w-100 max-w-full"
-      >{value || ""}</textarea
-    >
+      bind:value
+    ></textarea>
   {/if}
 
   {#if field.type == "select"}
     <select
       class="border border-gray-400 px-3 py-1.5 rounded w-80 max-w-full"
-      name={group.id + "-" + field.id}
+      bind:value
     >
       {#each field.options as option}
-        <option value={option.value} selected={value == option.value}
-          >{option.label}</option
-        >
+        <option value={option.value}>{option.label}</option>
       {/each}
     </select>
   {/if}
 
   {#if field.type == "checkbox"}
-    <input
-      type="checkbox"
-      name={group.id + "-" + field.id}
-      checked={value == "on"}
-    />
+    <input type="checkbox" bind:checked={value} />
   {/if}
 
   {#if field.type == "radio"}
@@ -54,10 +44,9 @@
       <label class="py-1 block"
         ><input
           type="radio"
-          name={group.id + "-" + field.id}
           value={option.value}
+          bind:group={value}
           class="mr-2"
-          checked={value == option.value}
         />
         {option.label}</label
       >
@@ -65,6 +54,6 @@
   {/if}
 
   {#if field.type == "image"}
-    <input type="file" name={group.id + "-" + field.id} accept="image/*" />
+    <input type="file" accept="image/*" />
   {/if}
 </div>

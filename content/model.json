@@ -61,7 +61,7 @@
                 {
                     "title": "Content",
                     "id": "content",
-                    "type": "editor",
+                    "type": "textarea",
                     "value": ""
                 }
             ]

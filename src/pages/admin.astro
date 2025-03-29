@@ -14,18 +14,19 @@ const model = modelJSON.groups;
 const user = await Astro.locals.currentUser();
 
 if (Astro.request.method === "POST") {
-  const formData = await Astro.request.formData();
-  let processedFormObject: any = {};
-  for (const [key, value] of formData.entries()) {
-    let [group, fieldID] = key.split("-");
-    if (group && fieldID) {
-      if (!processedFormObject[group]) {
-        processedFormObject[group] = {};
-      }
-      processedFormObject[group][fieldID] = value;
-    }
-  }
-  console.log("form data", processedFormObject);
+  // const formData = await Astro.request.formData();
+  // let processedFormObject: any = {};
+  // for (const [key, value] of formData.entries()) {
+  //   let [group, fieldID] = key.split("-");
+  //   if (group && fieldID) {
+  //     if (!processedFormObject[group]) {
+  //       processedFormObject[group] = {};
+  //     }
+  //     processedFormObject[group][fieldID] = value;
+  //   }
+  // }
+  let processedFormObject = await Astro.request.json();
+  console.log("formData", processedFormObject);
 
   if (import.meta.env.MODE === "production") {
     await commitFiles(JSON.stringify(processedFormObject, null, "\t"));
