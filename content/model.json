@@ -6,7 +6,6 @@
             "fields": [
                 {
                     "title": "Title",
-                    "description": "field description",
                     "id": "title",
                     "type": "text"
                 },
@@ -18,7 +17,14 @@
                 {
                     "title": "Logo",
                     "id": "logo",
-                    "type": "image"
+                    "type": "images",
+                    "limit": 1
+                },
+                {
+                    "title": "Slides",
+                    "id": "slides",
+                    "type": "images",
+                    "limit": 3
                 },
                 {
                     "title": "Language",

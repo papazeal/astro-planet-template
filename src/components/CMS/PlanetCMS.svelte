@@ -20,13 +20,10 @@
     isSaving = true;
     e.preventDefault();
     toast.loading("Saving...", { id: "cms" });
-    // const formData = new FormData(e.currentTarget);
+
     const response = await fetch("", {
       method: "POST",
       type: "application/json",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(formData),
     });
     const { message } = await response.json();
@@ -94,7 +91,7 @@
         <button
           type="button"
           class=" cursor-pointer py-1.5 px-2 border-b-2 border-transparent"
-          class:border-violet-600={selectedGroup.id === group.id}
+          class:!border-slate-600={selectedGroup.id === group.id}
           onclick={() => {
             selectedGroup = group;
             selectedRecord = null;
@@ -106,7 +103,7 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-1">
+  <div class="grid md:grid-cols-2">
     <div class="py-8 px-6 md:px-8 text-gray-700 pb-40 md:pb-8 max-w-3xl">
       <!-- title -->
       <div class="mb-10">
@@ -114,6 +111,7 @@
           <div>
             <div class="text-xl uppercase">{selectedGroup.title}</div>
             {#if selectedRecord}
+              <!-- breadcrumb -->
               <div class="flex gap-2">
                 <button
                   type="button"
@@ -121,12 +119,13 @@
                   onclick={() => (selectedRecord = null)}
                   >All {selectedGroup.title}</button
                 >
-                <div>></div>
+                <div class=" opacity-50">/</div>
                 <div>Record</div>
               </div>
             {/if}
           </div>
 
+          <!-- new record -->
           {#if selectedGroup.collection && !selectedRecord}
             <button
               type="button"
@@ -136,7 +135,7 @@
                   formData[selectedGroup.id] = [];
                 }
                 formData[selectedGroup.id].push({});
-              }}>New Post</button
+              }}>+ New Post</button
             >
           {/if}
         </div>
@@ -145,14 +144,18 @@
       {#if selectedGroup.collection}
         {#if !selectedRecord}
           <div
-            class="grid grid-cols-1 shadow-lg border-1 border-slate-300 rounded"
+            class="grid grid-cols-1 shadow-lg border-1 border-slate-300 rounded relative"
           >
             {#each formData[selectedGroup.id] as record, index}
               <div
+                class="h-2 absolute w-full"
+                ondragenter={(e) =>
+                  e.currentTarget.classList.add("bg-blue-200")}
+                ondragleave={(e) =>
+                  e.currentTarget.classList.remove("bg-blue-200")}
+              ></div>
+              <div
                 class=" py-2 border-b border-slate-200 flex gap-1 cursor-pointer hover:bg-slate-100 items-center"
-                onclick={() => {
-                  selectedRecord = record;
-                }}
                 draggable="true"
                 role="listitem"
                 ondragend={(e) => console.log(e)}
@@ -172,9 +175,15 @@
                     /></svg
                   >
                 </div>
-                <div>{record["title"] || "item #" + (index + 1)}</div>
+                <div
+                  onclick={() => {
+                    selectedRecord = record;
+                  }}
+                >
+                  {record["title"] || "item #" + (index + 1)}
+                </div>
 
-                <button
+                <div
                   class="ml-auto px-2 text-slate-300 cursor-pointer h-5 hover:text-slate-500"
                   aria-label="Remove item"
                   onclick={() => {
@@ -191,7 +200,7 @@
                       d="M205.66 194.34a8 8 0 0 1-11.32 11.32L128 139.31l-66.34 66.35a8 8 0 0 1-11.32-11.32L116.69 128L50.34 61.66a8 8 0 0 1 11.32-11.32L128 116.69l66.34-66.35a8 8 0 0 1 11.32 11.32L139.31 128Z"
                     />
                   </svg>
-                </button>
+                </div>
               </div>
             {/each}
           </div>
