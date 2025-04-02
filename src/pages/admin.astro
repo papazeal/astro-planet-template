@@ -2,10 +2,11 @@
 import Layout from "../layouts/Layout.astro";
 import PlanetCMS from "../components/CMS/PlanetCMS.svelte";
 import { SignOutButton } from "@clerk/astro/components";
-import { Code } from "astro:components";
 
 import { commitFiles } from "../libs/github";
 import { writeToFile } from "../libs/file";
+
+import sharp from "sharp";
 
 import data from "/content/data.json" assert { type: "json" };
 import modelJSON from "/content/model.json" assert { type: "json" };
@@ -13,26 +14,50 @@ const model = modelJSON.groups;
 
 const user = await Astro.locals.currentUser();
 
+let processBase64 = async (obj) => {
+  // if (typeof obj === "object")
+  let searchText = "data:image";
+  for (let key in obj) {
+    let value = obj[key];
+
+    if (typeof value === "string" && value.includes(searchText)) {
+      console.log("found: " + searchText);
+
+      // process image upload
+      let random = (Math.random() + 1).toString(36).substring(7);
+      let dir = "content/images/";
+      let fileName = random + ".webp";
+      let imgData = obj[key].split(";base64,").pop();
+      const imageBuffer = Buffer.from(imgData, "base64");
+      const webpImageBuffer = await sharp(imageBuffer)
+        .webp({ quality: 80 })
+        .toBuffer();
+      writeToFile(fileName, dir, webpImageBuffer);
+      console.log("file", dir + fileName);
+      obj[key] = dir + fileName;
+    }
+
+    if (typeof value === "object") {
+      await processBase64(value);
+    }
+  }
+};
+
 if (Astro.request.method === "POST") {
-  // const formData = await Astro.request.formData();
-  // let processedFormObject: any = {};
-  // for (const [key, value] of formData.entries()) {
-  //   let [group, fieldID] = key.split("-");
-  //   if (group && fieldID) {
-  //     if (!processedFormObject[group]) {
-  //       processedFormObject[group] = {};
-  //     }
-  //     processedFormObject[group][fieldID] = value;
-  //   }
-  // }
   let processedFormObject = await Astro.request.json();
-  console.log("formData", processedFormObject);
+  // console.log("formData", processedFormObject);
+
+  await processBase64(processedFormObject);
 
   if (import.meta.env.MODE === "production") {
     await commitFiles(JSON.stringify(processedFormObject, null, "\t"));
   } else {
     console.log("save file to local folder");
-    writeToFile("data.json", JSON.stringify(processedFormObject, null, "\t"));
+    writeToFile(
+      "data.json",
+      "content",
+      JSON.stringify(processedFormObject, null, "\t")
+    );
   }
 
   return Response.json({ message: "Data saved successfully" });
@@ -40,7 +65,6 @@ if (Astro.request.method === "POST") {
 
 const submit = async (e) => {
   e.preventDefault();
-  toast.success("Changes saved successfully");
 };
 ---
 
@@ -67,28 +91,7 @@ const submit = async (e) => {
       />
     </div>
   </div>
-  <div class="p-8 hidden">
-    <div class="">
-      <div>MODE: {import.meta.env.MODE}</div>
-      <div>VERCEL_GIT_REPO_SLUG: {import.meta.env.VERCEL_GIT_REPO_SLUG}</div>
-      <div>
-        VERCEL_GIT_REPO_OWNER: {import.meta.env.VERCEL_GIT_REPO_OWNER}
-      </div>
-    </div>
-    <div class="hidden">
-      data
-      <Code
-        code={JSON.stringify(data, null, "\t")}
-        lang="js"
-        class="p-4 rounded-lg mt-2 text-base"
-      />
-      model
-      <Code
-        code={JSON.stringify(model, null, "\t")}
-        class="p-4 rounded-lg mt-2 text-base"
-      />
-    </div>
-  </div>
+
   <PlanetCMS
     client:load
     model={model}

@@ -12,7 +12,7 @@
                 {
                     "title": "Description",
                     "id": "description",
-                    "type": "textarea"
+                    "type": "editor"
                 },
                 {
                     "title": "Logo",
