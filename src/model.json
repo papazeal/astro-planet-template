@@ -57,6 +57,7 @@
             "title": "Post",
             "id": "post",
             "collection": true,
+            "key": "title", 
             "fields": [
                 {
                     "title": "Title",

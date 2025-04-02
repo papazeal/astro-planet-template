@@ -2,7 +2,6 @@
 import Layout from "../layouts/Layout.astro";
 import PlanetCMS from "../components/CMS/PlanetCMS.svelte";
 import { SignOutButton } from "@clerk/astro/components";
-
 import { writeToR2 } from "../libs/s3";
 import { getData } from "../libs/util";
 import sharp from "sharp";
@@ -14,7 +13,8 @@ let data = await getData();
 const user = await Astro.locals.currentUser();
 
 let processBase64 = async (obj) => {
-  let searchText = "data:image";
+  const max_width = 1200;
+  const searchText = "data:image";
   for (let key in obj) {
     let value = obj[key];
 
@@ -23,14 +23,26 @@ let processBase64 = async (obj) => {
 
       // process image upload
       let random = (Math.random() + 1).toString(36).substring(7);
-      // let dir = "public/images/";
       let fileName = random + ".webp";
       let imgData = obj[key].split(";base64,").pop();
       const imageBuffer = Buffer.from(imgData, "base64");
-      const webpImageBuffer = await sharp(imageBuffer)
-        .webp({ quality: 80 })
-        .toBuffer();
+      const metadata = await sharp(imageBuffer).metadata();
+      let webpImageBuffer;
+
+      if (metadata.width > max_width) {
+        webpImageBuffer = await sharp(imageBuffer)
+          .resize({ width: max_width })
+          .webp({ quality: 80, lossless: true })
+          .toBuffer();
+      } else {
+        webpImageBuffer = await sharp(imageBuffer)
+          .webp({ quality: 80, lossless: true })
+          .toBuffer();
+      }
+
       obj[key] = await writeToR2(fileName, obj.type, webpImageBuffer);
+      obj.w = metadata.width;
+      obj.h = metadata.height;
     }
 
     if (typeof value === "object") {
