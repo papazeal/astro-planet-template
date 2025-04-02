@@ -25,7 +25,7 @@ let processBase64 = async (obj) => {
 
       // process image upload
       let random = (Math.random() + 1).toString(36).substring(7);
-      let dir = "content/images/";
+      let dir = "public/images/";
       let fileName = random + ".webp";
       let imgData = obj[key].split(";base64,").pop();
       const imageBuffer = Buffer.from(imgData, "base64");
