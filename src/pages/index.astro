@@ -2,10 +2,15 @@
 import { Code } from "astro:components";
 import astroLogo from "../assets/astro.svg";
 import Layout from "../layouts/Layout.astro";
-import data from "/content/data.json" assert { type: "json" };
-import model from "/content/model.json" assert { type: "json" };
+import { getData, getModel } from "../libs/util";
 
-export const prerender = true;
+let model = getModel();
+let data = await getData();
+
+Astro.response.headers.set(
+  "Vercel-CDN-Cache-Control",
+  `s-maxage=1, stale-while-revalidate=${60 * 60 * 24}`
+);
 ---
 
 <Layout>

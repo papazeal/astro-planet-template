@@ -2,6 +2,8 @@
   let { value = $bindable(), ...props } = $props();
   let field = props.field;
 
+  if (value === undefined) value = [];
+
   // https://stackoverflow.com/questions/15960508/javascript-async-readasdataurl-multiple-files
   // const arrayOfBase64 = await fileListToBase64(yourFileList)
   async function fileListToBase64(fileList) {
@@ -12,7 +14,7 @@
       return new Promise((resolve) => {
         reader.onload = (ev) => {
           resolve({
-            name: file.name,
+            // name: file.name,
             type: file.type,
             size: file.size,
             src: ev.target.result,
@@ -110,46 +112,48 @@
       /></label
     >
   {/if}
-  {#each value as item, index}
+  {#if Array.isArray(value)}
+    {#each value as item, index}
+      <div
+        class="relative cursor-grab inline-flex transition-all duration-200 ease-in-out"
+        draggable="true"
+        {index}
+        drag-group={field.id}
+        ondragstart={dragStart}
+        ondragenter={dragEnter}
+        ondragleave={dragLeave}
+        ondragover={dragOver}
+        ondragend={dragEnd}
+      >
+        <img
+          src={item.src}
+          alt="Image preview"
+          class="h-16 border border-slate-200 rounded pointer-events-none"
+        />
+        <button
+          type="button"
+          class="text-white bg-slate-700 border-white border-2 hover:bg-slate-800 cursor-pointer w-6 h-6 rounded-full flex items-center justify-center absolute -top-1.5 -right-1.5"
+          onclick={() => value.splice(index, 1)}
+          ><svg
+            class="h-4"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 256 256"
+          >
+            <path
+              fill="currentColor"
+              d="M205.66 194.34a8 8 0 0 1-11.32 11.32L128 139.31l-66.34 66.35a8 8 0 0 1-11.32-11.32L116.69 128L50.34 61.66a8 8 0 0 1 11.32-11.32L128 116.69l66.34-66.35a8 8 0 0 1 11.32 11.32L139.31 128Z"
+            />
+          </svg></button
+        >
+      </div>
+    {/each}
     <div
-      class="relative cursor-grab inline-flex transition-all duration-200 ease-in-out"
-      draggable="true"
-      {index}
+      class="w-16 h-16 !p-0"
       drag-group={field.id}
-      ondragstart={dragStart}
+      index={value.length}
       ondragenter={dragEnter}
       ondragleave={dragLeave}
       ondragover={dragOver}
-      ondragend={dragEnd}
-    >
-      <img
-        src={item.src}
-        alt="Image preview"
-        class="h-16 border border-slate-200 rounded pointer-events-none"
-      />
-      <button
-        type="button"
-        class="text-white bg-slate-700 border-white border-2 hover:bg-slate-800 cursor-pointer w-6 h-6 rounded-full flex items-center justify-center absolute -top-1.5 -right-1.5"
-        onclick={() => value.splice(index, 1)}
-        ><svg
-          class="h-4"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 256 256"
-        >
-          <path
-            fill="currentColor"
-            d="M205.66 194.34a8 8 0 0 1-11.32 11.32L128 139.31l-66.34 66.35a8 8 0 0 1-11.32-11.32L116.69 128L50.34 61.66a8 8 0 0 1 11.32-11.32L128 116.69l66.34-66.35a8 8 0 0 1 11.32 11.32L139.31 128Z"
-          />
-        </svg></button
-      >
-    </div>
-  {/each}
-  <div
-    class="w-16 h-16 !p-0"
-    drag-group={field.id}
-    index={value.length}
-    ondragenter={dragEnter}
-    ondragleave={dragLeave}
-    ondragover={dragOver}
-  ></div>
+    ></div>
+  {/if}
 </div>

@@ -3,19 +3,17 @@ import Layout from "../layouts/Layout.astro";
 import PlanetCMS from "../components/CMS/PlanetCMS.svelte";
 import { SignOutButton } from "@clerk/astro/components";
 
-import { commitFiles } from "../libs/github";
-import { writeToFile } from "../libs/file";
-
+import { writeToR2 } from "../libs/s3";
+import { getData } from "../libs/util";
 import sharp from "sharp";
 
-import data from "/content/data.json" assert { type: "json" };
-import modelJSON from "/content/model.json" assert { type: "json" };
+import modelJSON from "/src/model.json" assert { type: "json" };
 const model = modelJSON.groups;
+let data = await getData();
 
 const user = await Astro.locals.currentUser();
 
 let processBase64 = async (obj) => {
-  // if (typeof obj === "object")
   let searchText = "data:image";
   for (let key in obj) {
     let value = obj[key];
@@ -25,16 +23,14 @@ let processBase64 = async (obj) => {
 
       // process image upload
       let random = (Math.random() + 1).toString(36).substring(7);
-      let dir = "public/images/";
+      // let dir = "public/images/";
       let fileName = random + ".webp";
       let imgData = obj[key].split(";base64,").pop();
       const imageBuffer = Buffer.from(imgData, "base64");
       const webpImageBuffer = await sharp(imageBuffer)
         .webp({ quality: 80 })
         .toBuffer();
-      writeToFile(fileName, dir, webpImageBuffer);
-      console.log("file", dir + fileName);
-      obj[key] = "images/" + fileName;
+      obj[key] = await writeToR2(fileName, obj.type, webpImageBuffer);
     }
 
     if (typeof value === "object") {
@@ -45,27 +41,24 @@ let processBase64 = async (obj) => {
 
 if (Astro.request.method === "POST") {
   let processedFormObject = await Astro.request.json();
-  // console.log("formData", processedFormObject);
 
-  await processBase64(processedFormObject);
-
-  if (import.meta.env.MODE === "production") {
-    await commitFiles(JSON.stringify(processedFormObject, null, "\t"));
-  } else {
-    console.log("save file to local folder");
-    writeToFile(
+  try {
+    await processBase64(processedFormObject);
+    await writeToR2(
       "data.json",
-      "content",
-      JSON.stringify(processedFormObject, null, "\t")
+      "application/json",
+      JSON.stringify(processedFormObject, null, "\t"),
+      false
     );
+  } catch (error) {
+    return error;
   }
 
-  return Response.json({ message: "Data saved successfully" });
+  return Response.json({
+    message: "Data saved successfully",
+    formData: processedFormObject,
+  });
 }
-
-const submit = async (e) => {
-  e.preventDefault();
-};
 ---
 
 <Layout>

@@ -10,7 +10,7 @@
   let isSaving = $state(false);
   let selectedGroup = $state(model[0]);
   let selectedRecord = $state(null);
-  let formData = $state(data);
+  let formData = $state({ ...data });
 
   onMount(() => {
     // toast.success("It works!");
@@ -21,15 +21,21 @@
     e.preventDefault();
     toast.loading("Saving...", { id: "cms" });
 
-    const response = await fetch("", {
-      method: "POST",
-      type: "application/json",
-      body: JSON.stringify(formData),
-    });
-    const { message } = await response.json();
-
-    toast.success(message, { id: "cms", duration: 3000 });
-    isSaving = false;
+    try {
+      const response = await fetch("", {
+        method: "POST",
+        type: "application/json",
+        body: JSON.stringify(formData),
+      });
+      const resp = await response.json();
+      toast.success(resp.message, { id: "cms", duration: 3000 });
+      formData = resp.formData;
+      isSaving = false;
+      console.log("resp", resp);
+    } catch (e) {
+      toast.error(e.message, { id: "cms", duration: 3000 });
+      isSaving = false;
+    }
   }
 </script>
 
