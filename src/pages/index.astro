@@ -14,14 +14,22 @@ Astro.response.headers.set(
 ---
 
 <Layout>
-  <div class="p-10 max-w-3xl mx-auto antialiased sm:text-2xl text-lg">
+  <div class="p-10 max-w-3xl mx-auto antialiased">
     <img src={astroLogo.src} width="115" height="48" alt="Astro Homepage" />
-    <div class="mt-8">To manage website data, go to</div>
-    <a
-      href="/admin"
-      class="px-3 py-1.5 rounded-lg bg-slate-800 text-white my-4 inline-block text-base"
-      >Admin Dashboard</a
-    >
+    <div class="mt-8 text-2xl">Planet Template</div>
+    <div class="mt-2 text-lg">Astro template with built-in CMS</div>
+    <div class="flex gap-5 mt-4">
+      <a
+        href="/admin"
+        class="px-4 py-1.5 rounded-lg bg-slate-800 text-white my-4 inline-block text-base"
+        >Admin Dashboard</a
+      >
+      <a
+        href="https://github.com/papazeal/astro-planet-template"
+        class="px-4 py-1.5 rounded-lg bg-violet-700 text-white my-4 inline-block text-base"
+        >Docs</a
+      >
+    </div>
 
     <div class="mt-10">Data</div>
     <Code

@@ -1,3 +1,82 @@
+# Astro CMS Template
+
+This is an Astro template with a **built-in CMS** that stores data on **Cloudflare R2**. It provides an easy-to-use content management system while keeping your website fast and efficient.
+
+## 🚀 Features
+
+- **Astro Framework** for ultra-fast performance
+- **Built-in CMS** for managing content effortlessly
+- **Cloudflare R2 Storage** for scalable and cost-effective media storage
+- **Markdown & JSON Support** for flexible content management
+- **Serverless & Edge-Optimized** for speed and reliability
+
+## 📦 Installation
+
+1. Clone the repository:
+
+   ```sh
+   git clone https://github.com/papazeal/astro-planet-template.git
+   cd astro-planet-template
+   ```
+
+2. Install dependencies:
+
+   ```sh
+   npm install
+   ```
+
+3. Set up environment variables:
+   Create a `.env` file and add your Cloudflare R2 credentials:
+   ```env
+   R2_ACCESS_KEY=your-access-key
+   R2_SECRET_KEY=your-secret-key
+   R2_BUCKET_NAME=your-bucket-name
+   R2_ENDPOINT=https://your-account-id.r2.cloudflarestorage.com
+   ```
+
+## 📝 Usage
+
+### Running the Development Server
+
+```sh
+npm run dev
+```
+
+This starts the Astro dev server with live reload.
+
+### Deploying the Site
+
+To build and deploy:
+
+```sh
+npm run build
+npm run deploy
+```
+
+Ensure your deployment service supports **Astro with R2**.
+
+## 🛠️ CMS Configuration
+
+- Content is managed through JSON/Markdown files stored in **Cloudflare R2**.
+- You can extend the CMS by modifying the `/cms` directory.
+- File uploads are handled via API routes.
+
+## 🔗 Resources
+
+- [Astro Documentation](https://docs.astro.build/)
+- [Cloudflare R2](https://developers.cloudflare.com/r2/)
+- [GitHub Repository](https://github.com/papazeal/astro-planet-template)
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+### Need Help?
+
+Feel free to open an issue or contribute to the repository!
+
 # Astro Starter Kit: Basics
 
 ```sh
