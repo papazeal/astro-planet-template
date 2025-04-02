@@ -34,7 +34,7 @@ let processBase64 = async (obj) => {
         .toBuffer();
       writeToFile(fileName, dir, webpImageBuffer);
       console.log("file", dir + fileName);
-      obj[key] = dir + fileName;
+      obj[key] = "images/" + fileName;
     }
 
     if (typeof value === "object") {
