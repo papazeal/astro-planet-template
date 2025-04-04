@@ -63,6 +63,7 @@
       dragFrom == e.currentTarget.getAttribute("index") - 1
     )
       return;
+
     dragTo = e.currentTarget.getAttribute("index");
     dragToEl = e.currentTarget;
     e.currentTarget.classList.add(dragOverClass);

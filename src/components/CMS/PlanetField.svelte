@@ -40,7 +40,16 @@
 
   <!-- checkbox -->
   {#if field.type == "checkbox"}
-    <input type="checkbox" bind:checked={value} />
+    <label
+      class="w-12 h-5 bg-slate-100 block rounded-full cursor-pointer border border-slate-200"
+      class:bg-slate-600={value}
+    >
+      <div
+        class="w-5 h-5 rounded-full bg-white shadow-lg border-slate-300 border scale-120"
+        class:ml-auto={value}
+      ></div>
+      <input type="checkbox" bind:checked={value} class="hidden" /></label
+    >
   {/if}
 
   <!-- radio -->
@@ -53,8 +62,8 @@
           bind:group={value}
           class="mr-2"
         />
-        {option.label}</label
-      >
+        {option.label}
+      </label>
     {/each}
   {/if}
 

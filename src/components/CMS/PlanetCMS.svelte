@@ -2,6 +2,7 @@
   import toast, { Toaster } from "svelte-french-toast";
   import { onMount } from "svelte";
   import PlanetField from "./PlanetField.svelte";
+  import PlanetCollection from "./PlanetCollection.svelte";
   let props = $props();
   let model = props.model;
   let data = props.data;
@@ -149,67 +150,10 @@
 
       {#if selectedGroup.collection}
         {#if !selectedRecord}
-          <div
-            class="grid grid-cols-1 shadow-lg border-1 border-slate-300 rounded relative"
-          >
-            {#each formData[selectedGroup.id] as record, index}
-              <div
-                class="h-2 absolute w-full"
-                ondragenter={(e) =>
-                  e.currentTarget.classList.add("bg-blue-200")}
-                ondragleave={(e) =>
-                  e.currentTarget.classList.remove("bg-blue-200")}
-              ></div>
-              <div
-                class=" py-2 border-b border-slate-200 flex gap-1 cursor-pointer hover:bg-slate-100 items-center"
-                draggable="true"
-                role="listitem"
-                ondragend={(e) => console.log(e)}
-              >
-                <div
-                  class=" cursor-grab px-1.5 text-slate-400 hover:text-slate-500"
-                >
-                  <svg
-                    class="h-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16"
-                    ><path
-                      fill="currentColor"
-                      fill-rule="evenodd"
-                      d="M5.5 4.75a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0m3.5 0a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0M5.5 7.995a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0m3.5 0a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0M5.5 11.25a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0m3.5 0a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0"
-                      clip-rule="evenodd"
-                    /></svg
-                  >
-                </div>
-                <div
-                  onclick={() => {
-                    selectedRecord = record;
-                  }}
-                >
-                  {record["title"] || "item #" + (index + 1)}
-                </div>
-
-                <div
-                  class="ml-auto px-2 text-slate-300 cursor-pointer h-5 hover:text-slate-500"
-                  aria-label="Remove item"
-                  onclick={() => {
-                    formData[selectedGroup.id].splice(index, 1);
-                  }}
-                >
-                  <svg
-                    class="h-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 256 256"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M205.66 194.34a8 8 0 0 1-11.32 11.32L128 139.31l-66.34 66.35a8 8 0 0 1-11.32-11.32L116.69 128L50.34 61.66a8 8 0 0 1 11.32-11.32L128 116.69l66.34-66.35a8 8 0 0 1 11.32 11.32L139.31 128Z"
-                    />
-                  </svg>
-                </div>
-              </div>
-            {/each}
-          </div>
+          <PlanetCollection
+            bind:value={formData[selectedGroup.id]}
+            bind:selectedRecord
+          />
         {/if}
 
         {#if selectedRecord}
@@ -233,7 +177,7 @@
         </div>
       {/if}
     </div>
-    <div class="hidden">
+    <div class="">
       <pre>{JSON.stringify(formData, null, "  ")}</pre>
     </div>
   </div>
