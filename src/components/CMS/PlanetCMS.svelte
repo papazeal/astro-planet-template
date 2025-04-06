@@ -177,7 +177,7 @@
         </div>
       {/if}
     </div>
-    <div class="hidden1">
+    <div class="hidden">
       <pre>{JSON.stringify(formData, null, "  ")}</pre>
     </div>
   </div>
