@@ -1,10 +1,9 @@
 // @ts-check
 import { defineConfig } from "astro/config";
-// import vercel from "@astrojs/vercel";
+import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
 import clerk from "@clerk/astro";
 import svelte from "@astrojs/svelte";
-import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,5 +15,5 @@ export default defineConfig({
   },
   integrations: [clerk(), svelte()],
   output: "server",
-  adapter: cloudflare(),
+  adapter: vercel(),
 });
