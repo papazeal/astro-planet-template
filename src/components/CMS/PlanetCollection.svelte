@@ -6,14 +6,15 @@
   } = $props();
 
   // drag & drop
-  let dragGroup;
+  let dragGroup = null;
   let dragFrom = $state(null);
   let dragTo = $state(null);
-  const dragClass = "!bg-blue-50";
   function dragStart(e) {
     console.log("dragStart");
     dragFrom = e.currentTarget.getAttribute("index");
     dragGroup = e.currentTarget.getAttribute("drag-group");
+    e.dataTransfer.effectAllowed = "move";
+    e.currentTarget.classList.add("!cursor-grabbing");
   }
   function dragOver(e) {
     e.preventDefault();
@@ -35,18 +36,19 @@
   function dragEnd(e) {
     console.log("dragEnd");
     dragFrom = null;
+    e.currentTarget.classList.remove("!cursor-grabbing");
   }
 </script>
 
 {#if Array.isArray(value) && value.length > 0}
   <div
-    class="grid grid-cols-1 shadow border-1 border-slate-300 rounded relative"
+    class="grid grid-cols-1 shadow border-1 border-slate-300 rounded relative overflow-hidden"
   >
     {#each value as record, index}
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div
-        class={` border-b border-slate-200 flex gap-1 cursor-pointer items-center bg-white ${
-          dragFrom == index ? dragClass : ""
-        }`}
+        class="border-b border-slate-200 flex gap-1 cursor-pointer items-center bg-white"
+        class:!bg-blue-50={dragFrom == index}
         draggable="true"
         {index}
         drag-group={value.id}
@@ -69,6 +71,7 @@
             /></svg
           >
         </div>
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
         <div
           onclick={() => {
             selectedRecord = record;
@@ -78,6 +81,7 @@
           {record["title"] || "untitled"}
         </div>
 
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
         <div
           class="ml-auto px-2 text-slate-300 cursor-pointer h-5 hover:text-slate-500"
           aria-label="Remove item"

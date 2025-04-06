@@ -16,20 +16,21 @@
     <input
       type="text"
       bind:value
-      class="border border-gray-400 px-3 py-1.5 rounded w-100 max-w-full"
+      class="border border-slate-400 px-3 py-1.5 rounded w-full max-w-full"
     />
   {/if}
 
   {#if field.type == "textarea"}
     <textarea
-      class="border border-gray-400 px-3 py-1.5 rounded w-100 max-w-full"
+      class="border border-slate-400 px-3 py-1.5 rounded w-full max-w-full"
+      rows="4"
       bind:value
     ></textarea>
   {/if}
 
   {#if field.type == "select"}
     <select
-      class="border border-gray-400 px-3 py-1.5 rounded w-80 max-w-full"
+      class="border border-slate-400 px-3 py-1.5 rounded w-80 max-w-full"
       bind:value
     >
       {#each field.options as option}

@@ -1,73 +1,83 @@
-<script>
-  import { onMount, onDestroy } from "svelte";
-  import { Editor } from "@tiptap/core";
+<script lang="ts">
   import StarterKit from "@tiptap/starter-kit";
-
+  import { Editor } from "@tiptap/core";
+  import { onMount } from "svelte";
   let { value = $bindable(), ...props } = $props();
 
-  let element;
-  let editor;
+  let element: Element | undefined = $state();
+  let editor: Editor | undefined = $state();
+
+  let bt = [
+    {
+      name: "heading",
+      icon: "H",
+      action: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
+    },
+    {
+      name: "paragraph",
+      icon: "P",
+      action: () => editor.chain().focus().setParagraph().run(),
+    },
+    {
+      name: "bold",
+      icon: "B",
+      action: () => editor.chain().focus().toggleBold().run(),
+    },
+  ];
 
   onMount(() => {
     editor = new Editor({
       element: element,
-      editorProps: {
-        attributes: {
-          class:
-            "prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl min-h-40 focus:outline-none",
-        },
-      },
-      extensions: [StarterKit],
       content: value,
-      onTransaction: () => {
+      extensions: [StarterKit],
+      onCreate: () => {
+        console.log("onCreate");
+      },
+      onTransaction: ({ editor: newEditor }) => {
         // force re-render so `editor.isActive` works as expected
-        editor = editor;
+        editor = undefined;
+        editor = newEditor;
       },
       onUpdate: ({ editor }) => {
-        value = editor.getHTML(); // Sync changes
+        value = editor.getHTML();
       },
     });
   });
-
-  onDestroy(() => {
-    if (editor) {
-      editor.destroy();
-    }
-  });
 </script>
 
-{#if editor}
-  <button
-    type="button"
-    onclick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-    class:active={editor.isActive("heading", { level: 1 })}
-  >
-    H1
-  </button>
-  <button
-    type="button"
-    onclick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-    class:active={editor.isActive("heading", { level: 2 })}
-  >
-    H2
-  </button>
-  <button
-    type="button"
-    onclick={() => editor.chain().focus().setParagraph().run()}
-    class:active={editor.isActive("paragraph")}
-  >
-    P
-  </button>
-{/if}
-
-<div
-  bind:this={element}
-  class="p-4 border-gray-400 rounded border outline-none"
-></div>
+<div class=" border border-slate-400 rounded">
+  {#if editor}
+    <div class="flex border-b border-slate-400">
+      {#each bt as button}
+        <button
+          type="button"
+          onclick={button.action}
+          class={"px-3 py-1 block cursor-pointer hover:bg-slate-50 border-r border-r-slate-300 " +
+            (editor.isActive(button.name) ? "!bg-slate-600 text-white" : "")}
+        >
+          {button.icon}
+        </button>
+      {/each}
+    </div>
+  {/if}
+  <div bind:this={element} class="p-4" />
+</div>
 
 <style>
-  button.active {
-    background: black;
-    color: white;
+  :global {
+    .tiptap {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      outline: none;
+      min-height: 30vh;
+
+      h1 {
+        font-size: 2rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
   }
 </style>

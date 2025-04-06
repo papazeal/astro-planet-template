@@ -43,60 +43,79 @@
   }
 
   // drag & drop
-  let dragGroup = field.id;
+  let dragGroup = null;
   let dragFrom = $state(null);
   let dragTo = $state(null);
-  let dragToEl = null;
-  let dragOverClass = "pl-10";
   function dragStart(e) {
-    dragFrom = e.currentTarget.getAttribute("index");
     console.log("dragStart");
-  }
-  function dragEnter(e) {
-    e.preventDefault();
-    console.log(e.currentTarget.getAttribute("drag-group") + " / " + dragGroup);
-    if (e.currentTarget.getAttribute("drag-group") != dragGroup) {
-      return;
-    }
-    if (
-      dragFrom == e.currentTarget.getAttribute("index") ||
-      dragFrom == e.currentTarget.getAttribute("index") - 1
-    )
-      return;
-
-    dragTo = e.currentTarget.getAttribute("index");
-    dragToEl = e.currentTarget;
-    e.currentTarget.classList.add(dragOverClass);
-    console.log("dragEnter");
+    dragFrom = e.currentTarget.getAttribute("index");
+    dragGroup = e.currentTarget.getAttribute("drag-group");
+    e.dataTransfer.effectAllowed = "move";
+    e.currentTarget.classList.add("!cursor-grabbing");
   }
   function dragOver(e) {
     e.preventDefault();
-  }
-  function dragLeave(e) {
-    e.preventDefault();
+
     if (e.currentTarget.getAttribute("drag-group") != dragGroup) {
       return;
     }
-    dragTo = null;
-    dragToEl = null;
-    e.currentTarget.classList.remove(dragOverClass);
-    console.log("dragLeave");
-  }
-  function dragEnd(e) {
-    if (dragFrom && dragTo) {
-      if (dragFrom < dragTo) dragTo--;
-      dragToEl.classList.remove(dragOverClass);
+
+    if (dragFrom != e.currentTarget.getAttribute("index")) {
+      console.log("dragOver", e.currentTarget.getAttribute("index"));
+
+      dragTo = e.currentTarget.getAttribute("index");
+
       let [item] = value.splice(dragFrom, 1);
       value.splice(dragTo, 0, item);
+      dragFrom = dragTo;
     }
+  }
+  function dragEnd(e) {
+    console.log("dragEnd");
+    dragFrom = null;
+    e.currentTarget.classList.remove("!cursor-grabbing");
   }
 </script>
 
-<div class="hidden">group {dragGroup} - from {dragFrom} - to {dragTo}</div>
 <div class="flex gap-4 flex-wrap">
+  {#each value as item, index}
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <div
+      class="active:cursor-grabbing relative cursor-grab inline-flex border-2 border-slate-300 rounded bg-gray-100"
+      draggable="true"
+      {index}
+      drag-group={field.id}
+      ondragstart={dragStart}
+      ondragover={dragOver}
+      ondragend={dragEnd}
+    >
+      <!-- svelte-ignore a11y_img_redundant_alt -->
+      <img
+        src={item.src}
+        alt="Image preview"
+        class="h-16 w-20 object-cover pointer-events-none"
+      />
+      <!-- svelte-ignore a11y_consider_explicit_label -->
+      <button
+        type="button"
+        class="text-white bg-slate-700 border-white border-2 hover:bg-slate-800 cursor-pointer w-6 h-6 rounded-full flex items-center justify-center absolute -top-1.5 -right-1.5"
+        onclick={() => value.splice(index, 1)}
+        ><svg
+          class="h-4"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 256 256"
+        >
+          <path
+            fill="currentColor"
+            d="M205.66 194.34a8 8 0 0 1-11.32 11.32L128 139.31l-66.34 66.35a8 8 0 0 1-11.32-11.32L116.69 128L50.34 61.66a8 8 0 0 1 11.32-11.32L128 116.69l66.34-66.35a8 8 0 0 1 11.32 11.32L139.31 128Z"
+          />
+        </svg></button
+      >
+    </div>
+  {/each}
   {#if !value || value?.length < field.limit}
     <label
-      class="px-5 h-16 bg-slate-200 rounded cursor-pointer inline-flex items-center justify-center text-slate-500 hover:bg-slate-300 text-center border border-slate-200"
+      class=" h-16 w-20 bg-slate-200 rounded cursor-pointer inline-flex items-center justify-center text-slate-500 hover:bg-slate-300 text-center border-2 box-content border-slate-200"
     >
       <svg xmlns="http://www.w3.org/2000/svg" class="h-10" viewBox="0 0 256 256"
         ><path
@@ -112,49 +131,5 @@
         multiple={field.limit > 1}
       /></label
     >
-  {/if}
-  {#if Array.isArray(value)}
-    {#each value as item, index}
-      <div
-        class="relative cursor-grab inline-flex transition-all duration-200 ease-in-out"
-        draggable="true"
-        {index}
-        drag-group={field.id}
-        ondragstart={dragStart}
-        ondragenter={dragEnter}
-        ondragleave={dragLeave}
-        ondragover={dragOver}
-        ondragend={dragEnd}
-      >
-        <img
-          src={item.src}
-          alt="Image preview"
-          class="h-16 border border-slate-200 rounded pointer-events-none"
-        />
-        <button
-          type="button"
-          class="text-white bg-slate-700 border-white border-2 hover:bg-slate-800 cursor-pointer w-6 h-6 rounded-full flex items-center justify-center absolute -top-1.5 -right-1.5"
-          onclick={() => value.splice(index, 1)}
-          ><svg
-            class="h-4"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 256 256"
-          >
-            <path
-              fill="currentColor"
-              d="M205.66 194.34a8 8 0 0 1-11.32 11.32L128 139.31l-66.34 66.35a8 8 0 0 1-11.32-11.32L116.69 128L50.34 61.66a8 8 0 0 1 11.32-11.32L128 116.69l66.34-66.35a8 8 0 0 1 11.32 11.32L139.31 128Z"
-            />
-          </svg></button
-        >
-      </div>
-    {/each}
-    <div
-      class="w-16 h-16 !p-0"
-      drag-group={field.id}
-      index={value.length}
-      ondragenter={dragEnter}
-      ondragleave={dragLeave}
-      ondragover={dragOver}
-    ></div>
   {/if}
 </div>
