@@ -81,7 +81,7 @@
   {#each value as item, index}
     <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div
-      class="active:cursor-grabbing relative cursor-grab inline-flex border-1 border-slate-300 rounded bg-gray-100"
+      class="active:cursor-grabbing relative cursor-grab inline-flex border-1 border-gray-300 rounded bg-gray-100"
       class:!bg-blue-400={dragFrom == index}
       draggable="true"
       {index}
@@ -117,13 +117,21 @@
   {/each}
   {#if !value || value?.length < field.limit}
     <label
-      class=" h-16 w-20 bg-slate-200 rounded cursor-pointer inline-flex items-center justify-center text-slate-500 hover:bg-slate-300 text-center border-2 box-content border-slate-200"
+      class=" h-16 w-20 bg-gray-200 rounded cursor-pointer inline-flex items-center justify-center text-slate-500 hover:bg-slate-300 text-center border-1 box-content border-slate-200"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-10" viewBox="0 0 256 256"
-        ><path
-          fill="currentColor"
-          d="M208 34H48a14 14 0 0 0-14 14v160a14 14 0 0 0 14 14h160a14 14 0 0 0 14-14V48a14 14 0 0 0-14-14M46 208V48a2 2 0 0 1 2-2h160a2 2 0 0 1 2 2v82.2l-28.1-28.1a14 14 0 0 0-19.8 0L54.2 210H48a2 2 0 0 1-2-2m162 2H71.17l99.41-99.41a2 2 0 0 1 2.83 0L210 147.17V208a2 2 0 0 1-2 2M96 118a22 22 0 1 0-22-22a22 22 0 0 0 22 22m0-32a10 10 0 1 1-10 10a10 10 0 0 1 10-10"
-        /></svg
+      <svg class="h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+        ><g
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+          ><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><circle
+            cx="9"
+            cy="9"
+            r="2"
+          /><path d="m21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21" /></g
+        ></svg
       >
       <input
         type="file"

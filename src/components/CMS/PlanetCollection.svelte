@@ -42,12 +42,12 @@
 
 {#if Array.isArray(value) && value.length > 0}
   <div
-    class="grid grid-cols-1 shadow border-1 border-slate-300 rounded relative overflow-hidden"
+    class="grid grid-cols-1 shadow border-1 border-gray-300 rounded relative overflow-hidden"
   >
     {#each value as record, index}
       <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div
-        class="border-b border-slate-200 flex gap-1 cursor-pointer items-center bg-white"
+        class="border-b border-gray-200 last:border-0 flex gap-1 cursor-pointer items-center bg-white"
         class:!bg-blue-50={dragFrom == index}
         draggable="true"
         {index}
@@ -57,7 +57,7 @@
         ondragend={dragEnd}
       >
         <div
-          class="py-2 cursor-grab px-1.5 text-slate-400 hover:text-slate-500 active:cursor-grabbing"
+          class="py-2 cursor-grab px-1.5 text-gray-500 hover:text-gray-600 active:cursor-grabbing"
         >
           <svg
             class="h-6"
@@ -83,7 +83,7 @@
 
         <!-- svelte-ignore a11y_click_events_have_key_events -->
         <div
-          class="ml-auto px-2 text-slate-300 cursor-pointer h-5 hover:text-slate-500"
+          class="ml-auto px-2 text-gray-300 cursor-pointer h-5 hover:text-gray-500"
           aria-label="Remove item"
           onclick={() => {
             value.splice(index, 1);

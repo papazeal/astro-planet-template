@@ -8,11 +8,11 @@
   let editor: Editor | undefined = $state();
 
   let bt = [
-    {
-      name: "paragraph",
-      icon: `<svg class="w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 6.1H3m18 6H3M15.1 18H3"/></svg>`,
-      action: () => editor.chain().focus().setParagraph().run(),
-    },
+    // {
+    //   name: "paragraph",
+    //   icon: `<svg class="w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 6.1H3m18 6H3M15.1 18H3"/></svg>`,
+    //   action: () => editor.chain().focus().setParagraph().run(),
+    // },
     {
       name: "heading",
       icon: `<svg class="w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 12h12M6 20V4m12 16V4"/></svg>`,
@@ -25,7 +25,12 @@
       action: () => editor.chain().focus().toggleBulletList().run(),
     },
     {
-      name: "blockQuote",
+      name: "orderedList",
+      icon: `<svg class="w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 12h11m-11 6h11M10 6h11M4 10h2M4 6h1v4m1 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>`,
+      action: () => editor.chain().focus().toggleOrderedList().run(),
+    },
+    {
+      name: "blockquote",
       icon: `<svg class="w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 12a2 2 0 0 0 2-2V8H8m6 4a2 2 0 0 0 2-2V8h-2"/></g></svg>`,
       action: () => editor.chain().focus().toggleBlockquote().run(),
     },
@@ -36,7 +41,7 @@
     },
     {
       name: "bold",
-      icon: `<svg class="w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"/></svg>`,
+      icon: `<svg class="w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"/></svg>`,
       action: () => editor.chain().focus().toggleBold().run(),
     },
     // {
@@ -66,24 +71,22 @@
   });
 </script>
 
-<div class=" border border-slate-300 rounded overflow-hidden">
+<div class=" border border-gray-300 rounded overflow-hidden">
   {#if editor}
-    <div
-      class="flex bg-slate-1100 px-4 py-2 gap-2 shadow-lg border-b border-slate-300"
-    >
+    <div class="flex px-2 py-2 gap-2 shadow-lg">
       {#each bt as button}
         <button
           type="button"
           onclick={button.action}
-          class={"w-7 h-7 rounded-lg  flex items-center justify-center cursor-pointer hover:bg-slate-100  " +
-            (editor.isActive(button.name) ? "!bg-slate-600 text-white" : "")}
+          class={"w-7 h-7 rounded-lg  flex items-center justify-center cursor-pointer hover:bg-gray-100  " +
+            (editor.isActive(button.name) ? "!bg-gray-600 text-white" : "")}
         >
           {@html button.icon}
         </button>
       {/each}
     </div>
   {/if}
-  <div bind:this={element} class="p-6 overflow-auto pb-20 max-h-[65vh]" />
+  <div bind:this={element} class="p-6 overflow-auto pb-12 max-h-[65vh]" />
 </div>
 
 <style>
@@ -91,14 +94,14 @@
     .tiptap {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 24px;
       outline: none;
       min-height: 30vh;
 
       h1,
       h2 {
         font-size: 2rem;
-        margin-top: 2rem;
+        margin-top: 2.5rem;
         &:first-child {
           margin-top: 0;
         }
@@ -117,9 +120,31 @@
         background: #f5f5f5;
         padding: 20px;
         border-radius: 4px;
+        font-style: italic;
       }
-      a {
-        text-decoration: underline;
+      ul,
+      ol {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        counter-reset: item;
+        li {
+          position: relative;
+          padding-left: 24px;
+        }
+      }
+      ul li:before {
+        content: "•";
+        position: absolute;
+        left: 2px;
+        top: -2px;
+      }
+      ol li:before {
+        content: counter(item) ". ";
+        counter-increment: item;
+        position: absolute;
+        left: 2px;
+        top: 0px;
       }
     }
   }
