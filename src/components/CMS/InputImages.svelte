@@ -81,7 +81,8 @@
   {#each value as item, index}
     <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div
-      class="active:cursor-grabbing relative cursor-grab inline-flex border-2 border-slate-300 rounded bg-gray-100"
+      class="active:cursor-grabbing relative cursor-grab inline-flex border-1 border-slate-300 rounded bg-gray-100"
+      class:!bg-blue-400={dragFrom == index}
       draggable="true"
       {index}
       drag-group={field.id}
@@ -93,7 +94,8 @@
       <img
         src={item.src}
         alt="Image preview"
-        class="h-16 w-20 object-cover pointer-events-none"
+        class="h-16 w-20 object-cover pointer-events-none rounded"
+        class:opacity-40={dragFrom == index}
       />
       <!-- svelte-ignore a11y_consider_explicit_label -->
       <button

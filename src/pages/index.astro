@@ -14,10 +14,16 @@ Astro.response.headers.set(
 ---
 
 <Layout>
-  <div class="p-10 max-w-3xl mx-auto antialiased">
+  <div class="p-6 max-w-3xl mx-auto antialiased">
     <img src={astroLogo.src} width="115" height="48" alt="Astro Homepage" />
     <div class="mt-8 text-2xl">Planet Template</div>
-    <div class="mt-2 text-lg">Astro template with built-in CMS</div>
+    <div class="mt-1 text-lg opacity-70">
+      Astro template with <span class="relative px-0.5"
+        >built-in CMS<span
+          class="absolute left-0 bottom-0 h-2 w-full bg-amber-300 -z-10"
+        ></span></span
+      >
+    </div>
     <div class="flex gap-5 mt-4">
       <a
         href="/admin"
@@ -34,14 +40,14 @@ Astro.response.headers.set(
     <div class="mt-10">Data</div>
     <Code
       code={JSON.stringify(data, null, "  ")}
-      lang="js"
+      lang="json"
       class="p-4 rounded-lg mt-2 text-sm"
     />
 
     <div class="mt-10">Model</div>
     <Code
       code={JSON.stringify(model, null, "  ")}
-      lang="js"
+      lang="json"
       class="p-4 rounded-lg mt-2 text-sm"
     />
   </div>
