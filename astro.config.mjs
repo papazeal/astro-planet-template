@@ -1,11 +1,10 @@
 // @ts-check
 import { defineConfig } from "astro/config";
-
-import vercel from "@astrojs/vercel";
+// import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
 import clerk from "@clerk/astro";
-
 import svelte from "@astrojs/svelte";
+import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,18 +13,8 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
-    // server: {
-    //   watch: {
-    //     ignored: ["**/content/**"],
-    //   },
-    // },
   },
   integrations: [clerk(), svelte()],
   output: "server",
-  adapter: vercel({
-    imageService: true,
-  }),
-  image: {
-    remotePatterns: [{ protocol: "https" }],
-  },
+  adapter: cloudflare(),
 });
