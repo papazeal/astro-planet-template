@@ -1,6 +1,6 @@
 # Astro Template with Built-in CMS
 
-![planet template](https://bucket.papazeal.com/planet-template.jpg "Planet Template")
+![planet template](https://bucket.papazeal.com/planet-template-new.jpg "Planet Template")
 
 This is an Astro template with a **built-in CMS** that stores data on **Cloudflare R2**. It provides an easy-to-use content management system while keeping your website fast and efficient.
 
@@ -22,7 +22,7 @@ npm create astro@latest -- --template papazeal/astro-planet-template
 
 OR
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fpapazeal%2Fastro-planet-template&env=PROJECT_ID,PUBLIC_CLERK_PUBLISHABLE_KEY,CLERK_SECRET_KEY,ADMIN_EMAILS,R2_ENDPOINT,R2_ACCESS_KEY_ID,R2_SECRET_ACCESS_KEY,R2_BUCKET,R2_CUSTOM_DOMAIN&demo-title=Planet%20Template&demo-description=An%20Astro%20Template%20with%20Buit-in%20CMS&demo-url=https%3A%2F%2Fplanet.papazeal.com%2F&demo-image=https%3A%2F%2Fbucket.papazeal.com%2Fplanet-template.jpg)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fpapazeal%2Fastro-planet-template&env=PROJECT_ID,PUBLIC_CLERK_PUBLISHABLE_KEY,CLERK_SECRET_KEY,ADMIN_EMAILS,R2_ENDPOINT,R2_ACCESS_KEY_ID,R2_SECRET_ACCESS_KEY,R2_BUCKET,R2_CUSTOM_DOMAIN&demo-title=Planet%20Template&demo-description=An%20Astro%20Template%20with%20Buit-in%20CMS&demo-url=https%3A%2F%2Fplanet.papazeal.com%2F&demo-image=https%3A%2F%2Fbucket.papazeal.com%2Fplanet-template-new.jpg)
 
 ## Environment Variables
 
