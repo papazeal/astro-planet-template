@@ -26,29 +26,29 @@ This is an Astro template with a **built-in CMS** that stores data on **Cloudfla
    ```
 
 3. Set up environment variables:
-   Create a `.env` file and add your Cloudflare R2 credentials:
+   Create a `.env` file and add your Clerk and Cloudflare R2 credentials:
    ```env
-# must be unique each of your site
-# example: my_website_com
-PROJECT_ID=
+   # must be unique each of your site
+   # example: my_website_com
+   PROJECT_ID=
 
-# Auth
-# https://clerk.com/
-PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
+   # Auth
+   # https://clerk.com/
+   PUBLIC_CLERK_PUBLISHABLE_KEY=
+   CLERK_SECRET_KEY=
 
-# admin emails
-# leave blank to allow everyone
-# use , separate
-ADMIN_EMAILS=
+   # admin emails
+   # leave blank to allow everyone
+   # use , separate
+   ADMIN_EMAILS=
 
-# Cloudflare R2
-# https://www.cloudflare.com/developer-platform/products/r2/
-R2_ENDPOINT=
-R2_ACCESS_KEY_ID=
-R2_SECRET_ACCESS_KEY=
-R2_BUCKET=
-R2_CUSTOM_DOMAIN=
+   # Cloudflare R2
+   # https://www.cloudflare.com/developer-platform/products/r2/
+   R2_ENDPOINT=
+   R2_ACCESS_KEY_ID=
+   R2_SECRET_ACCESS_KEY=
+   R2_BUCKET=
+   R2_CUSTOM_DOMAIN=
    ```
 
 ## 📝 Usage
