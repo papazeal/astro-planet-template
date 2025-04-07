@@ -29,14 +29,29 @@
   {/if}
 
   {#if field.type == "select"}
-    <select
-      class="border border-gray-300 px-3 py-1.5 rounded w-80 max-w-full"
-      bind:value
-    >
-      {#each field.options as option}
-        <option value={option.value}>{option.label}</option>
-      {/each}
-    </select>
+    <div class="relative border border-gray-300 rounded">
+      <select
+        class=" outline-0 w-full appearance-none px-3 py-1.5 cursor-pointer"
+        bind:value
+      >
+        {#each field.options as option}
+          <option value={option.value}>{option.label}</option>
+        {/each}
+      </select>
+      <svg
+        class=" absolute right-2 top-2 h-6 pointer-events-none text-gray-400"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        ><path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m6 9l6 6l6-6"
+        /></svg
+      >
+    </div>
   {/if}
 
   <!-- checkbox -->
@@ -73,6 +88,7 @@
     <InputImages {field} bind:value />
   {/if}
 
+  <!-- editor -->
   {#if field.type == "editor"}
     <InputTiptap {field} bind:value />
   {/if}

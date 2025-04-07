@@ -77,7 +77,7 @@
   }
 </script>
 
-<div class="flex gap-4 flex-wrap">
+<div class="flex gap-5 flex-wrap">
   {#each value as item, index}
     <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div

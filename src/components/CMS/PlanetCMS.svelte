@@ -93,6 +93,7 @@
         </div>
       </div>
     </div>
+    <!-- tab -->
     <div class="px-5 md:px-6 flex gap-1 overflow-x-auto scrollbar-hide">
       {#each model as group}
         <button
@@ -110,7 +111,7 @@
     </div>
   </div>
 
-  <div class="grid md:grid-cols-2">
+  <div class="grid max-w-3xl mx-auto">
     <div class="py-8 px-6 md:px-8 text-gray-700 pb-40 md:pb-8 max-w-3xl">
       <!-- title -->
       <div class="mb-10">

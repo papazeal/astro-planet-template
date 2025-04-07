@@ -8,11 +8,6 @@
   let editor: Editor | undefined = $state();
 
   let bt = [
-    // {
-    //   name: "paragraph",
-    //   icon: `<svg class="w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 6.1H3m18 6H3M15.1 18H3"/></svg>`,
-    //   action: () => editor.chain().focus().setParagraph().run(),
-    // },
     {
       name: "heading",
       icon: `<svg class="w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 12h12M6 20V4m12 16V4"/></svg>`,
@@ -44,11 +39,6 @@
       icon: `<svg class="w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"/></svg>`,
       action: () => editor.chain().focus().toggleBold().run(),
     },
-    // {
-    //   name: "link",
-    //   icon: `<svg class="w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></g></svg>`,
-    //   action: () => editor.chain().focus().toggleBold().run(),
-    // },
   ];
 
   onMount(() => {
