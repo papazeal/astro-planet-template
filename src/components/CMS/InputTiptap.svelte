@@ -1,11 +1,11 @@
-<script lang="ts">
+<script>
   import StarterKit from "@tiptap/starter-kit";
   import { Editor } from "@tiptap/core";
   import { onMount } from "svelte";
   let { value = $bindable(), ...props } = $props();
 
-  let element: Element | undefined = $state();
-  let editor: Editor | undefined = $state();
+  let element = $state();
+  let editor = $state();
 
   let bt = [
     {
@@ -76,7 +76,7 @@
       {/each}
     </div>
   {/if}
-  <div bind:this={element} class="p-6 overflow-auto pb-12 max-h-[65vh]" />
+  <div bind:this={element} class="p-6 overflow-auto pb-12 max-h-[65vh]"></div>
 </div>
 
 <style>

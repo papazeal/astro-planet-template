@@ -6,7 +6,7 @@ import { writeToR2 } from "../libs/s3";
 import { getData } from "../libs/util";
 import sharp from "sharp";
 
-import modelJSON from "/src/model.json" assert { type: "json" };
+import modelJSON from "../model.json" assert { type: "json" };
 const model = modelJSON.groups;
 let data = await getData();
 
