@@ -11,7 +11,7 @@ export const onRequest = clerkMiddleware(async (auth, context) => {
   }
 
   // signed-in but not in admin emails list
-  const adminEmails: string = import.meta.env.ADMIN_EMAILS;
+  const adminEmails = import.meta.env.ADMIN_EMAILS;
   if (adminEmails)
     if (userId && isProtectedRoute(context.request)) {
       const user = await context.locals.currentUser();
