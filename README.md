@@ -22,7 +22,7 @@ npm create astro@latest -- --template papazeal/astro-planet-template
 
 OR
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fpapazeal%2Fastro-planet-template&env=PROJECT_ID,PUBLIC_CLERK_PUBLISHABLE_KEY,CLERK_SECRET_KEY,ADMIN_EMAILS,R2_ENDPOINT,R2_ACCESS_KEY_ID,R2_SECRET_ACCESS_KEY,R2_BUCKET,R2_CUSTOM_DOMAIN&demo-title=Planet%20Template&demo-description=An%20Astro%20Template%20with%20Buit-in%20CMS&demo-url=https%3A%2F%2Fplanet.papazeal.com%2F&demo-image=https%3A%2F%2Fbucket.papazeal.com%2Fplanet-template-new.jpg)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fpapazeal%2Fastro-planet-template&env=PROJECT_ID,ADMIN_EMAILS,PUBLIC_CLERK_PUBLISHABLE_KEY,CLERK_SECRET_KEY,R2_ENDPOINT,R2_ACCESS_KEY_ID,R2_SECRET_ACCESS_KEY,R2_BUCKET,R2_CUSTOM_DOMAIN&envDescription=ENV%20detail&envLink=https%3A%2F%2Fgithub.com%2Fpapazeal%2Fastro-planet-template&demo-title=Planet%20Template&demo-description=An%20Astro%20Template%20with%20Buit-in%20CMS&demo-url=https%3A%2F%2Fplanet.papazeal.com%2F&demo-image=https%3A%2F%2Fbucket.papazeal.com%2Fplanet-template-new.jpg)
 
 ## Environment Variables
 
