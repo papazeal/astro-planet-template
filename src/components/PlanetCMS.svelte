@@ -139,7 +139,7 @@
               type="button"
               class="border px-2 rounded cursor-pointer"
               onclick={() => {
-                if (!formData[selectedGroup.id]) {
+                if (!Array.isArray(formData[selectedGroup.id])) {
                   formData[selectedGroup.id] = [];
                 }
                 formData[selectedGroup.id].push({});
