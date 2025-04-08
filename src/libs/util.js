@@ -1,7 +1,7 @@
-import modelJSON from "/src/model.json" assert { type: "json" };
+import { model } from "../model.js";
 
 export const getModel = () => {
-  return modelJSON;
+  return model;
 };
 export const getData = async () => {
   let response = await fetch(
