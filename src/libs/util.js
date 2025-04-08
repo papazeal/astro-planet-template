@@ -14,7 +14,7 @@ export const getData = async () => {
     data = await response.json();
   } else {
     data = {};
-    modelJSON.groups.forEach((group) => {
+    model.forEach((group) => {
       data[group.id] = {};
     });
   }
