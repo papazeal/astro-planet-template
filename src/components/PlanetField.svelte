@@ -39,7 +39,7 @@
         {/each}
       </select>
       <svg
-        class=" absolute right-2 top-2 h-6 pointer-events-none text-gray-400"
+        class=" absolute right-2 top-2 h-5 pointer-events-none text-gray-400"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         ><path
@@ -48,7 +48,7 @@
           stroke-linecap="round"
           stroke-linejoin="round"
           stroke-width="2"
-          d="m6 9l6 6l6-6"
+          d="m7 15l5 5l5-5M7 9l5-5l5 5"
         /></svg
       >
     </div>
